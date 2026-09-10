@@ -1,23 +1,11 @@
 {
-  // Publicação do site dkdtecnologia.com como Worker com assets estáticos.
-  //
-  // ATENÇÃO: "name" precisa ser EXATAMENTE o nome do Worker que aparece no
-  // painel do Cloudflare. Se for diferente, o deploy cria um Worker novo em
-  // vez de atualizar o seu.
-  "name": "dkd-site",
-
+  "name": "dkdtecnologia-com",
   "compatibility_date": "2026-09-09",
-
-  // O Worker só entra em ação quando nenhum arquivo estático corresponde à
-  // URL — na prática, apenas em /api/contato. Todo o resto do site é servido
-  // direto dos assets, sem passar por código.
   "main": "worker/index.js",
-
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "404-page"
   },
-
   "observability": { "enabled": true }
 }

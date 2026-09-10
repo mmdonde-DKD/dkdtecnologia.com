@@ -36,7 +36,20 @@ Precisa ser por servidor: as páginas usam caminhos absolutos (`/assets/…`).
 
 ## Publicar no Cloudflare Pages
 
-Configuração, uma vez só:
+### Como Worker (é o que está em uso)
+
+O que manda é o `wrangler.jsonc` na raiz — **não** os campos do painel:
+
+| Campo do painel | Valor |
+|---|---|
+| Comando da build | **deixe vazio** |
+| Comando de implantação | `npx wrangler deploy` |
+| Diretório raiz | `/` |
+
+O `"name"` do `wrangler.jsonc` precisa ser idêntico ao nome do Worker no painel
+(hoje: `dkdtecnologia-com`). Se for diferente, o deploy cria um Worker novo.
+
+### Como Pages (alternativa)
 
 | Campo | Valor |
 |---|---|
