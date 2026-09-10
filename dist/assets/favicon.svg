@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs><linearGradient id="p" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F7FAFC"/><stop offset=".55" stop-color="#C9D1D8"/><stop offset="1" stop-color="#8E9AA4"/>
+</linearGradient></defs>
+<rect width="64" height="64" rx="12" fill="#030913"/>
+<circle cx="32" cy="32" r="25" fill="#08172E" stroke="url(#p)" stroke-width="3"/>
+<path d="M22 24h20l6 6v8l-6 6H22l-6-6v-8z" fill="#0C2540" stroke="url(#p)" stroke-width="2.4"/>
+<text x="32" y="39" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif"
+      font-size="17" font-weight="700" fill="url(#p)">IA</text>
+</svg>

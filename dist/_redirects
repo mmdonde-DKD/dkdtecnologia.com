@@ -1,0 +1,13 @@
+# apex é canônico; www redireciona
+https://www.dkdtecnologia.com/*  https://dkdtecnologia.com/:splat  301
+
+# atalhos e nomes antigos
+/atc                    /produtos/fiscal-tributaria/  301
+/produtos/atc           /produtos/fiscal-tributaria/  301
+/fiscal                 /produtos/fiscal-tributaria/  301
+/gestao                 /produtos/gestao-financeira/  301
+/alpha                  /produtos/alpha-invest/       301
+/asset                  /produtos/asset-intelligence/ 301
+/privacidade            /legal/privacidade/           301
+/termos                 /legal/termos/                301
+/entrar                 https://app.dkdtecnologia.com 302
