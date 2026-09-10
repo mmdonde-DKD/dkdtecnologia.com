@@ -312,6 +312,10 @@ def build_static():
     write("_redirects", REDIRECTS)
     write("robots.txt", ROBOTS)
     write("functions/api/contato.js", FUNCTION_CONTATO)
+    # Em Workers com assets, tudo que está no diretório é servido publicamente.
+    # O .assetsignore mantém a Pages Function fora do ar — ela só existe aqui
+    # para o caso de o site voltar a ser publicado como Cloudflare Pages.
+    write(".assetsignore", "functions/\n")
 
     os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
     for img in IMAGENS:
