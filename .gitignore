@@ -4,3 +4,16 @@ __pycache__/
 Thumbs.db
 dkd-site-preview.html
 DKD_Site_Institucional_previa.html
+
+# Portais ficam em repositórios Pages próprios (ver README, seção "Fora deste repositório")
+portais/
+
+# Cópias de trabalho e material de apresentação — não fazem parte do site publicado
+dkd-site-repo/
+dkd-site-repo.zip
+Claude outputs/
+ABRIR_APRESENTACAO.bat
+LEIA-ME.md
+
+# Cache local do Wrangler
+.wrangler/
