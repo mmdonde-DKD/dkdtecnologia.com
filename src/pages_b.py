@@ -4,9 +4,7 @@
 from shell import APP, EMAIL, EMAIL_DPO, RAZAO, CNPJ, CIDADE, AVISO_CVM, formulario, whats_link
 
 # ------------------------------------------------------------------ PREÇOS
-# TODO PREÇO: os valores do módulo Fiscal vêm do Plano de Comercialização
-# aprovado (doc 01). Os valores dos outros três módulos são PROPOSTA e
-# precisam da sua validação — veja LEIA-ME.md, item 1.
+# Preços aprovados para publicação (decisão de 09/09/2026).
 PRECOS = """
 <section class="band band--hero band--surface">
   <div class="container">
@@ -19,11 +17,6 @@ PRECOS = """
 
 <section class="band">
   <div class="container">
-    <!-- ================= REVISAR ANTES DE PUBLICAR =====================
-         Remova o bloco .todo abaixo depois de validar os preços dos
-         módulos Gestão Financeira, Alpha Invest e Asset Intelligence.
-         Os preços do módulo Fiscal vêm do doc 01 e já estão aprovados.
-         ================================================================ -->
 
     <p class="eyebrow">DKD Financial Tools AI · Módulo de Análise, Simulação e Inteligência Fiscal e Tributária</p>
     <h2>Por faixa de CNPJs sob gestão</h2>

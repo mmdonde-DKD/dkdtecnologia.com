@@ -34,22 +34,18 @@ Precisa ser por servidor: as páginas usam caminhos absolutos (`/assets/…`).
 
 ---
 
-## Publicar no Cloudflare Pages
+## Publicar (Cloudflare Workers + assets estáticos)
 
-Configuração, uma vez só:
+O site roda como o Worker **`dkdtecnologia-com`** (ver `wrangler.jsonc`), ligado a este
+repositório pelo Workers Builds: todo `git push` na `main` publica em 1–2 minutos
+(`PUBLICAR_SITE.bat` faz o push). O `dist/` já vai pronto; o Worker só atende `/api/contato`.
 
-| Campo | Valor |
-|---|---|
-| Framework preset | **None** |
-| Build command | **(vazio)** |
-| Build output directory | **`dist`** |
+Variáveis do formulário (Worker → Settings → Variables and Secrets, tipo Secret):
+`RESEND_API_KEY`, `DESTINO`, `REMETENTE`, `TURNSTILE_SECRET`.
+Binding opcional `LEADS` (KV) — se usado, declarar em `wrangler.jsonc`, senão o deploy o remove.
 
-O `dist/` já vai pronto no repositório, então o Cloudflare só serve — não há etapa de build
-para dar errado. Depois disso, todo `git push` na `main` publica em produção, e toda outra
-branch ganha uma URL de prévia isolada.
-
-Variáveis de ambiente do formulário de contato (Settings → Environment variables):
-`RESEND_API_KEY`, `DESTINO`, `REMETENTE` e `TURNSTILE_SECRET`.
+O redirecionamento `www → apex` **não** funciona pelo `_redirects` em Workers: fazer por
+Rules → Redirect Rules no painel do domínio.
 
 ---
 
@@ -69,7 +65,8 @@ Variáveis de ambiente do formulário de contato (Settings → Environment varia
 | Onde | O quê |
 |---|---|
 | `src/shell.py` → `TURNSTILE_SITEKEY` | vazio — o formulário de contato está sem proteção anti-robô |
-| `src/pages_b.py` → `MINUTA` | privacidade e termos seguem como minuta, aguardando revisão jurídica |
+| `src/pages_b.py` → `MINUTA` | privacidade e termos publicados com aviso de minuta, até a revisão jurídica |
+| Formulário de contato | sem `RESEND_API_KEY` e sem KV `LEADS`, o envio falha — configurar um dos dois |
 | Caso do cliente-âncora | espaço reservado na home, sem depoimento inventado |
 
 ## Fora deste repositório
