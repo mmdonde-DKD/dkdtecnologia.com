@@ -572,8 +572,8 @@ JS = r"""
     var erros = {
       campos: 'Faltou preencher nome, e-mail ou mensagem. Confira e envie de novo.',
       robo: 'A verificação de segurança não passou. Recarregue a página e tente mais uma vez.',
-      envio: 'O envio falhou do nosso lado. Escreva direto para contato@dkdtecnologia.com — respondemos igual.',
-      inesperado: 'Algo saiu errado no envio. Escreva direto para contato@dkdtecnologia.com.'
+      envio: 'O envio falhou do nosso lado. Escreva direto para comercial@dkdtecnologia.com — respondemos igual.',
+      inesperado: 'Algo saiu errado no envio. Escreva direto para comercial@dkdtecnologia.com.'
     };
     var e = q.get('erro');
     caixa.className = 'aviso-form ' + (e ? 'aviso-form--erro' : 'aviso-form--ok');

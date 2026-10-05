@@ -4,7 +4,7 @@
   // ATENÇÃO: "name" precisa ser EXATAMENTE o nome do Worker que aparece no
   // painel do Cloudflare. Se for diferente, o deploy cria um Worker novo em
   // vez de atualizar o seu.
-  "name": "dkd-site",
+  "name": "dkdtecnologia-com",
 
   "compatibility_date": "2026-09-09",
 

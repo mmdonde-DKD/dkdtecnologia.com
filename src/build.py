@@ -51,6 +51,18 @@ IMAGENS = [
     "apple-touch-icon.png",
 ]
 
+PAGINA_404 = """
+<section class="band band--hero band--surface">
+  <div class="container">
+    <p class="eyebrow">Erro 404</p>
+    <h1>Esta página não existe.</h1>
+    <p class="lead" style="margin-top:18px">O endereço pode ter mudado ou sido digitado com algum detalhe diferente.</p>
+    <p style="margin-top:28px"><a class="btn btn--solid" href="/">Voltar para o início</a>
+    &nbsp; <a class="btn" href="/produtos/">Ver os módulos</a></p>
+  </div>
+</section>
+"""
+
 M = MODULOS
 PAGES = [
     # (caminho, título, descrição, corpo, entra_no_sitemap)
@@ -186,7 +198,7 @@ FUNCTION_CONTATO = r"""// functions/api/contato.js — Cloudflare Pages Function
 //
 // Variáveis (Settings > Variables and Secrets, tipo Secret):
 //   RESEND_API_KEY    chave do provedor de e-mail transacional
-//   DESTINO           ex.: contato@dkdtecnologia.com
+//   DESTINO           ex.: comercial@dkdtecnologia.com
 //   REMETENTE         ex.: site@dkdtecnologia.com (domínio verificado no provedor)
 //   TURNSTILE_SECRET  chave secreta do widget Turnstile
 // Binding opcional (Settings > Bindings > KV namespace):
@@ -336,6 +348,14 @@ def build_static():
         write(target, html)
         if in_map:
             urls.append(SITE + path)
+
+    # Página de erro: o Worker (not_found_handling = "404-page") serve /404.html
+    # para qualquer endereço que não exista.
+    html404 = liga_portais(page("Página não encontrada — DKD Tecnologia e Inovação",
+                                "O endereço procurado não existe ou mudou de lugar.",
+                                "/404.html", PAGINA_404), local=False)
+    html404 = html404.replace("<head>", '<head>\n<meta name="robots" content="noindex,nofollow">', 1)
+    write("404.html", html404)
 
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']

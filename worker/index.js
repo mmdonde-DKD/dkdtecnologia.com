@@ -6,7 +6,7 @@
 //
 // Variáveis (Settings > Variables and Secrets, tipo Secret):
 //   RESEND_API_KEY    chave do provedor de e-mail transacional
-//   DESTINO           ex.: contato@dkdtecnologia.com
+//   DESTINO           ex.: comercial@dkdtecnologia.com
 //   REMETENTE         ex.: site@dkdtecnologia.com (domínio verificado no provedor)
 //   TURNSTILE_SECRET  chave secreta do widget Turnstile
 // Binding opcional (Settings > Bindings > KV namespace):

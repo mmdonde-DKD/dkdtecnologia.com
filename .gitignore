@@ -17,3 +17,10 @@ LEIA-ME.md
 
 # Cache local do Wrangler
 .wrangler/
+
+# Atalho local de publicação
+PUBLICAR_SITE.bat
+site/
+ferramentas/assets/
+ferramentas/*.zip
+ferramentas/*.css

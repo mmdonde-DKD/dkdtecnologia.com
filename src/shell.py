@@ -16,12 +16,12 @@ RAZAO = "DKD Tecnologia e Inovação Ltda"
 MARCA = "DKD Tecnologia e Inovação"
 CNPJ = "59.890.881/0001-06"
 CIDADE = "Caxias do Sul / RS"
-EMAIL = "contato@dkdtecnologia.com"
+EMAIL = "comercial@dkdtecnologia.com"
 EMAIL_DPO = "privacidade@dkdtecnologia.com"
 # ------------------------------------------------- o que você preenche
 # WhatsApp comercial, só dígitos, com 55 e DDD. Enquanto ficar como está,
 # o botão flutuante simplesmente não aparece — nada quebra na tela.
-WHATSAPP = "55XXXXXXXXXXX"
+WHATSAPP = "5554999135507"
 WHATS_MSG = "Olá! Vim pelo site da DKD e queria entender melhor os módulos."
 
 # Chave pública do widget Turnstile (Cloudflare → Turnstile → Add widget).

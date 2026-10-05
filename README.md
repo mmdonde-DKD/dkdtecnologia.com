@@ -68,7 +68,6 @@ Variáveis de ambiente do formulário de contato (Settings → Environment varia
 
 | Onde | O quê |
 |---|---|
-| `src/shell.py` → `WHATSAPP` | ainda é `55XXXXXXXXXXX` — o botão de WhatsApp não funciona |
 | `src/shell.py` → `TURNSTILE_SITEKEY` | vazio — o formulário de contato está sem proteção anti-robô |
 | `src/pages_b.py` → `MINUTA` | privacidade e termos seguem como minuta, aguardando revisão jurídica |
 | Caso do cliente-âncora | espaço reservado na home, sem depoimento inventado |
