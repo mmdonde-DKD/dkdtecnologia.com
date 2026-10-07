@@ -179,8 +179,8 @@ HEADERS = """/*
   Cache-Control: public, max-age=31536000, immutable
 """
 
-REDIRECTS = """# apex é canônico; www redireciona
-https://www.dkdtecnologia.com/*  https://dkdtecnologia.com/:splat  301
+REDIRECTS = """# www -> apex fica numa Redirect Rule do painel: em Workers o _redirects só
+# aceita origem relativa (erro 100324 no deploy de 07/10/2026).
 
 # atalhos e nomes antigos
 /atc                    /produtos/fiscal-tributaria/  301
