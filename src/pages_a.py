@@ -44,7 +44,7 @@ URGENCIA = """<section class="urgency">
       <div><b data-h>—</b><span>horas</span></div>
       <div><b data-m>—</b><span>min</span></div>
     </div>
-    <p><strong>A opção pelo regime híbrido do Simples pode ser cancelada até 30 de novembro de 2026</strong> — depois disso fica irretratável, com efeito em 1º de janeiro de 2027 (Resolução CGSN nº 190/2026).
+    <p><strong>O prazo de opção pelo regime híbrido do Simples foi prorrogado até 30 de outubro de 2026</strong>, com efeito em 1º de janeiro de 2027. Detalhes no <a href="https://www8.receita.fazenda.gov.br/simplesnacional/" target="_blank" rel="noopener">Portal do Simples Nacional</a>.
     O módulo Fiscal e Tributária compara Simples puro, Simples híbrido, Lucro Presumido e Lucro Real sobre os dados reais de cada CNPJ da carteira.</p>
     <a class="btn btn--solid" href="/produtos/fiscal-tributaria/">Ver o módulo Fiscal</a>
   </div>
@@ -361,9 +361,9 @@ FISCAL = """
     </div>
     <div class="card card--pad">
       <p class="eyebrow eyebrow--warn">Prazo em vigor</p>
-      <h3>30 de novembro de 2026</h3>
-      <p class="small">Último dia para cancelar a opção pelo regime híbrido do Simples Nacional feita até 30 de setembro
-      (Resolução CGSN nº 190/2026). Depois disso a escolha fica irretratável, com efeito em 1º de janeiro de 2027.</p>
+      <h3>30 de outubro de 2026</h3>
+      <p class="small">Prazo prorrogado para a opção pelo regime híbrido do Simples Nacional, com efeito em
+      1º de janeiro de 2027. Detalhes no <a href="https://www8.receita.fazenda.gov.br/simplesnacional/" target="_blank" rel="noopener">Portal do Simples Nacional</a>.</p>
       <p class="small" style="margin-bottom:0"><strong>1º de janeiro de 2027:</strong> o Simples entra em todos os modelos,
       a CBS passa a ser cobrada integralmente, PIS e COFINS acabam e o IPI vai a zero.</p>
     </div>

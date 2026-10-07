@@ -541,12 +541,12 @@ JS = r"""
     var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false');});}
 
   // Contagem regressiva para o fim da janela de opção pelo regime híbrido.
-  // Alvo: fim do prazo de cancelamento da opção (30/11/2026). Revisar depois disso.
-  var alvo=new Date('2026-11-30T23:59:59-03:00');
+  // Alvo: fim do prazo prorrogado de opção pelo regime híbrido (30/10/2026). Revisar depois disso.
+  var alvo=new Date('2026-10-30T23:59:59-03:00');
   document.querySelectorAll('[data-count]').forEach(function(el){
     function tick(){
       var d=alvo-new Date();
-      if(d<0){el.innerHTML='<p class="mono">O prazo de 30/11/2026 encerrou. Fale com a DKD sobre os próximos marcos.</p>';return;}
+      if(d<0){el.innerHTML='<p class="mono">O prazo de 30/10/2026 encerrou. Fale com a DKD sobre os próximos marcos.</p>';return;}
       var dias=Math.floor(d/864e5),h=Math.floor(d/36e5)%24,m=Math.floor(d/6e4)%60;
       el.querySelector('[data-d]').textContent=dias;
       el.querySelector('[data-h]').textContent=('0'+h).slice(-2);

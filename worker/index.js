@@ -10,11 +10,10 @@
 //   DESTINO           ex.: comercial@dkdtecnologia.com
 //   REMETENTE         ex.: site@dkdtecnologia.com (domínio verificado no provedor)
 //   TURNSTILE_SECRET  chave secreta do widget Turnstile
-// Binding opcional (Settings > Bindings > KV namespace):
-//   LEADS             guarda um registro por lead, para contar e exportar
-//
-// Tudo o que é opcional degrada em silêncio: sem chave de Turnstile ele não
-// confere; sem KV ele não guarda; sem chave de e-mail ele avisa que falhou.
+// Binding KV (wrangler.jsonc): LEADS — namespace "dkd-leads", um registro por contato.
+// Resumo diário: cron do wrangler.jsonc chama scheduled() às 23h55 de Brasília e
+// manda um e-mail com os contatos do dia + CSV. Sem RESEND_API_KEY os contatos
+// ficam guardados no KV e saem no primeiro resumo depois que a chave existir.
 // O visitante nunca vê erro de configuração.
 
 import { rotearLicencas } from "./licencas.js";
@@ -90,32 +89,106 @@ async function recebeContato(request, env) {
       `REGISTRADO NO KV: ${guardado ? "sim" : "não"}`,
     ].join("\n");
 
-    if (!env.RESEND_API_KEY || !env.DESTINO || !env.REMETENTE) {
-      // Sem e-mail configurado o lead não pode se perder: se foi para o KV,
-      // vale como recebido; se não foi, o visitante precisa saber.
-      return volta(guardado ? "?ok=1" : "?erro=envio");
-    }
+    // Guardado no KV = recebido. O e-mail sai no resumo diário (scheduled, abaixo).
+    if (guardado) return volta("?ok=1");
 
-    const r = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: env.REMETENTE,
-        to: [env.DESTINO],
-        reply_to: dados.email,
-        subject: `Site DKD — ${dados.origem || "contato"} — ${dados.nome}${dados.empresa ? " (" + dados.empresa + ")" : ""}`,
-        text: corpo,
-      }),
+    // Só se o KV falhar: tenta mandar este contato na hora, para não perdê-lo.
+    const enviado = await enviaEmail(env, {
+      subject: `Site DKD — ${dados.origem || "contato"} — ${dados.nome}${dados.empresa ? " (" + dados.empresa + ")" : ""}`,
+      text: corpo,
+      reply_to: dados.email,
     });
-
-    if (!r.ok && !guardado) return volta("?erro=envio");
-    return volta("?ok=1");
+    return volta(enviado ? "?ok=1" : "?erro=envio");
   } catch (e) {
     return volta("?erro=inesperado");
   }
+}
+
+// ------------------------------------------------------------ e-mail (Resend)
+const DESTINO_PADRAO = "comercial@dkdtecnologia.com";
+
+async function enviaEmail(env, { subject, text, reply_to, attachments }) {
+  if (!env.RESEND_API_KEY || !env.REMETENTE) return false;
+  try {
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: env.REMETENTE,
+        to: [env.DESTINO || DESTINO_PADRAO],
+        subject, text,
+        ...(reply_to ? { reply_to } : {}),
+        ...(attachments ? { attachments } : {}),
+      }),
+    });
+    return r.ok;
+  } catch (e) {
+    return false;
+  }
+}
+
+// ------------------------------------------------------- resumo diário de leads
+// Disparado pelo cron do wrangler.jsonc (23h55 de Brasília). Manda num e-mail só
+// todos os contatos gravados desde o último resumo enviado, com um CSV anexo.
+// Se o envio falhar, o marcador não avança: os contatos entram no resumo seguinte.
+const MARCA_RESUMO = "meta:ultimo_resumo";
+const quando = (iso) =>
+  new Date(iso).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+const csvCampo = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+const utf8b64 = (txt) => {
+  const b = new TextEncoder().encode(txt);
+  let bin = "";
+  for (let i = 0; i < b.length; i += 0x8000) bin += String.fromCharCode(...b.subarray(i, i + 0x8000));
+  return btoa(bin);
+};
+
+async function resumoDiario(env) {
+  if (!env.LEADS) return "sem-kv";
+  const desde = (await env.LEADS.get(MARCA_RESUMO)) || "lead:";
+  const chaves = [];
+  let cursor;
+  do {
+    const l = await env.LEADS.list({ prefix: "lead:", cursor });
+    for (const k of l.keys) if (k.name > desde) chaves.push(k.name);
+    cursor = l.list_complete ? undefined : l.cursor;
+  } while (cursor);
+  if (!chaves.length) return "nenhum-lead";
+  chaves.sort();
+
+  const leads = [];
+  for (const k of chaves) {
+    const v = await env.LEADS.get(k, "json");
+    if (v) leads.push(v);
+  }
+
+  const hoje = new Date().toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
+  const blocos = leads.map((d, i) => [
+    `#${i + 1} — ${quando(d.recebido_em)} — página: ${d.origem || "-"}`,
+    `Nome: ${d.nome}`,
+    `Empresa: ${d.empresa || "-"}`,
+    `E-mail: ${d.email}`,
+    `Telefone/WhatsApp: ${d.telefone || "-"}`,
+    `Interesse: ${d.modulo || "-"}${d.cnpjs ? " · CNPJs: " + d.cnpjs : ""}`,
+    `Mensagem: ${d.mensagem}`,
+  ].join("\n"));
+  const texto = [
+    `${leads.length} contato(s) registrado(s) no site dkdtecnologia.com desde o último resumo.`,
+    "",
+    ...blocos.flatMap((b) => [b, ""]),
+    "Planilha com todos os campos em anexo (abre no Excel).",
+  ].join("\n");
+
+  const colunas = ["recebido_em", ...CAMPOS, "pais", "referrer"];
+  const csv = "\uFEFF" + [colunas.join(";"),
+    ...leads.map((d) => colunas.map((c) => csvCampo(c === "recebido_em" ? quando(d[c]) : d[c])).join(";"))].join("\r\n");
+
+  const ok = await enviaEmail(env, {
+    subject: `Site DKD — ${leads.length} contato(s) em ${hoje}`,
+    text: texto,
+    attachments: [{ filename: `contatos-site-dkd-${hoje.replace(/\//g, "-")}.csv`, content: utf8b64(csv) }],
+  });
+  if (ok) await env.LEADS.put(MARCA_RESUMO, chaves[chaves.length - 1]);
+  return ok ? `enviado:${leads.length}` : "falha-envio";
 }
 
 export default {
@@ -138,5 +211,9 @@ export default {
     // Qualquer outra coisa que não bateu com um arquivo estático volta para a
     // camada de assets, que aplica o tratamento de 404 configurado.
     return env.ASSETS.fetch(request);
+  },
+
+  async scheduled(controller, env, ctx) {
+    ctx.waitUntil(resumoDiario(env).then((r) => console.log("resumo diário de leads:", r)));
   },
 };

@@ -49,5 +49,13 @@
   // "send_email": [ { "name": "EMAIL" } ],
   // ------------------------------------------------------------------
 
+  // Contatos do formulário do site (namespace "dkd-leads", criado em 07/10/2026).
+  "kv_namespaces": [
+    { "binding": "LEADS", "id": "a1467fd0fe7246ddab45e1cd5b6454a6" }
+  ],
+
+  // Resumo diário dos contatos por e-mail: 02h55 UTC = 23h55 em Brasília.
+  "triggers": { "crons": ["55 2 * * *"] },
+
   "observability": { "enabled": true }
 }

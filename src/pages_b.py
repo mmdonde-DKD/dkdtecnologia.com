@@ -905,9 +905,9 @@ DIAGNOSTICO = f"""
     </div>
     <div class="card card--pad">
       <p class="eyebrow eyebrow--warn">Por que agora</p>
-      <p class="small">A opção pelo regime híbrido do Simples feita até 30 de setembro <strong>pode ser cancelada até 30 de novembro de 2026</strong>
-      (Resolução CGSN nº 190/2026). O efeito começa em 1º de janeiro de 2027 e é irretratável depois disso.</p>
-      <p class="small" style="margin-bottom:0">Quem revisar a escolha do cliente depois do prazo vai responder por uma decisão
+      <p class="small">O prazo de opção pelo regime híbrido do Simples <strong>foi prorrogado até 30 de outubro de 2026</strong>.
+      O efeito começa em 1º de janeiro de 2027. Detalhes no <a href="https://www8.receita.fazenda.gov.br/simplesnacional/" target="_blank" rel="noopener">Portal do Simples Nacional</a>.</p>
+      <p class="small" style="margin-bottom:0">Quem responder ao cliente depois do prazo vai responder por uma decisão
       que já não dá para desfazer.</p>
     </div>
   </div>
@@ -1023,8 +1023,8 @@ DIAGNOSTICO = f"""
 
 <section class="band band--wash band--tight" data-mod="fiscal">
   <div class="container" style="text-align:center">
-    <h2>O prazo de 30 de novembro não se move.</h2>
-    <p class="lead" style="margin:0 auto 6px">Um diagnóstico agora vale mais do que uma boa ferramenta em dezembro.</p>
+    <h2>O prazo agora é 30 de outubro.</h2>
+    <p class="lead" style="margin:0 auto 6px">A prorrogação deu fôlego, não folga: um diagnóstico agora vale mais do que uma boa ferramenta em novembro.</p>
     <div class="btn-row" style="justify-content:center">
       <a class="btn btn--solid" href="#pedir">Pedir o diagnóstico</a>
       <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-diagnostico">Conversar no WhatsApp</a>
