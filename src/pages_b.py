@@ -252,7 +252,7 @@ SOBRE = f"""
   <div class="container">
     <p class="eyebrow">Sobre a DKD</p>
     <h1>Ferramenta boa é a que você consegue defender depois.</h1>
-    <p class="lead" style="margin-top:18px">A DKD Tecnologia constrói ferramentas de análise financeira, fiscal e de investimentos
+    <p class="lead" style="margin-top:18px">A DKD Tecnologia e Inovação constrói ferramentas de análise financeira, fiscal e de investimentos
     para quem precisa responder por número diante de outra pessoa: um cliente, um sócio, um fiscal, ou você mesmo daqui a dois anos.</p>
   </div>
 </section>
@@ -388,8 +388,8 @@ CONTATO = f"""
       <div class="card card--pad" style="margin-bottom:18px">
         <p class="eyebrow eyebrow--mute">Canais diretos</p>
         <ul class="plain small" style="margin-bottom:0">
-          <li>Comercial e suporte: <a href="mailto:{EMAIL}">{EMAIL}</a></li>
-          <li>Privacidade e LGPD: <a href="mailto:{EMAIL_DPO}">{EMAIL_DPO}</a></li>
+          <li>E-mail (comercial, suporte e LGPD): <a href="mailto:{EMAIL}">{EMAIL}</a></li>
+          <li>WhatsApp: <a href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-contato">+55 54 99913-5507</a></li>
           <li>Já é cliente? Entre direto no <a href="{APP}">portal</a>.</li>
         </ul>
       </div>
@@ -601,7 +601,7 @@ PRIVACIDADE = f"""
   <div class="container">
     <p class="eyebrow">Legal</p>
     <h1>Política de Privacidade</h1>
-    <p class="lead" style="margin-top:18px">Última atualização: 9 de setembro de 2026. Aplica-se ao site dkdtecnologia.com e aos módulos DKD Financial Tools.</p>
+    <p class="lead" style="margin-top:18px">Última atualização: 7 de outubro de 2026. Aplica-se ao site dkdtecnologia.com e aos módulos DKD Financial Tools.</p>
   </div>
 </section>
 <section class="band">
@@ -666,7 +666,7 @@ TERMOS = f"""
   <div class="container">
     <p class="eyebrow">Legal</p>
     <h1>Termos de Uso</h1>
-    <p class="lead" style="margin-top:18px">Última atualização: 9 de setembro de 2026. Aplicam-se ao site e aos módulos DKD Financial Tools.</p>
+    <p class="lead" style="margin-top:18px">Última atualização: 7 de outubro de 2026. Aplicam-se ao site e aos módulos DKD Financial Tools.</p>
   </div>
 </section>
 <section class="band">
@@ -706,7 +706,7 @@ TERMOS = f"""
     Os dados carregados e os relatórios gerados a partir deles pertencem ao cliente, que pode exportá-los a qualquer momento durante a vigência.</p>
 
     <h2>8. Vigência, reajuste e rescisão</h2>
-    <p>A vigência, o reajuste anual e as condições de rescisão são os definidos no contrato e na tabela de preços publicada.
+    <p>A vigência, o reajuste anual e as condições de rescisão são os definidos no contrato e na proposta comercial aceita pelo cliente.
     Encerrado o contrato, o acesso é revogado e os dados são devolvidos e eliminados no prazo acordado.</p>
 
     <h2>9. Limitação de responsabilidade</h2>
@@ -905,9 +905,9 @@ DIAGNOSTICO = f"""
     </div>
     <div class="card card--pad">
       <p class="eyebrow eyebrow--warn">Por que agora</p>
-      <p class="small">A opção pelo regime híbrido do Simples <strong>fecha em 30 de setembro de 2026</strong>
+      <p class="small">A opção pelo regime híbrido do Simples feita até 30 de setembro <strong>pode ser cancelada até 30 de novembro de 2026</strong>
       (Resolução CGSN nº 190/2026). O efeito começa em 1º de janeiro de 2027 e é irretratável depois disso.</p>
-      <p class="small" style="margin-bottom:0">Quem responder ao cliente depois do prazo vai responder por uma decisão
+      <p class="small" style="margin-bottom:0">Quem revisar a escolha do cliente depois do prazo vai responder por uma decisão
       que já não dá para desfazer.</p>
     </div>
   </div>
@@ -1023,12 +1023,119 @@ DIAGNOSTICO = f"""
 
 <section class="band band--wash band--tight" data-mod="fiscal">
   <div class="container" style="text-align:center">
-    <h2>O prazo de 30 de setembro não se move.</h2>
-    <p class="lead" style="margin:0 auto 6px">Um diagnóstico agora vale mais do que uma boa ferramenta em novembro.</p>
+    <h2>O prazo de 30 de novembro não se move.</h2>
+    <p class="lead" style="margin:0 auto 6px">Um diagnóstico agora vale mais do que uma boa ferramenta em dezembro.</p>
     <div class="btn-row" style="justify-content:center">
       <a class="btn btn--solid" href="#pedir">Pedir o diagnóstico</a>
-      <a class="btn btn--quiet" href="/precos/">Ver os preços</a>
+      <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-diagnostico">Conversar no WhatsApp</a>
     </div>
+  </div>
+</section>
+"""
+
+
+# ------------------------------------------------------------- CONSULTORIA
+# Página criada em 07/10/2026. Texto-base do Maicol no parágrafo de abertura;
+# contato só por WhatsApp e e-mail (sem formulário), em linha com a fase de
+# sondagem do mercado.
+CONSULTORIA = f"""
+<section class="band band--hero band--surface">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">Consultoria e soluções customizadas com IA</p>
+      <h1>Estratégia que vira processo. Processo que vira resultado.</h1>
+      <p class="lead" style="margin-top:18px">A DKD Tecnologia e Inovação tem por objetivo comercializar plataformas que auxiliem
+      a busca pela excelência dos processos de seus clientes, alcançando resultados sustentáveis e consistentes.</p>
+      <p style="margin-top:12px">Atuamos também com a consultoria de processos de gestão estratégica, voltada ao projeto da
+      empresa desde o ambiente externo — com pesquisas de inteligência de mercado — até a elaboração, análise e revisão das
+      estratégias comerciais, financeiras e operacionais dos nossos clientes, criando ferramentas customizadas que os auxiliem
+      na busca de melhores resultados e agregando valor desde a entrega de serviços e produtos aos seus clientes, acionistas e
+      colaboradores.</p>
+      <div class="btn-row">
+        <a class="btn btn--solid" href="__WHATSAPP_CONSULTORIA__" target="_blank" rel="noopener" data-lead="whatsapp-consultoria">Conversar no WhatsApp</a>
+        <a class="btn btn--quiet" href="mailto:{EMAIL}?subject=Consultoria%20e%20solu%C3%A7%C3%B5es%20com%20IA" data-lead="email-consultoria">Escrever para {EMAIL}</a>
+      </div>
+    </div>
+    <div class="card card--pad">
+      <p class="eyebrow eyebrow--mute">Foco</p>
+      <h3 style="margin-top:0">Gestão comercial e financeira, com IA aplicada ao processo.</h3>
+      <ul class="plain small" style="margin-bottom:0">
+        <li>Inteligência de mercado e leitura do ambiente externo</li>
+        <li>Revisão das estratégias comerciais, financeiras e operacionais</li>
+        <li>Portais e ferramentas sob medida para a rotina da sua equipe</li>
+        <li>Indicadores que a diretoria entende e acompanha</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <p class="eyebrow">Como atuamos</p>
+    <h2>Do mercado lá fora à ferramenta na mão da sua equipe.</h2>
+    <div class="grid g4" style="margin-top:26px">
+      <div class="card card--pad"><p class="eyebrow eyebrow--mute">01 · Mercado</p><h3>Inteligência de mercado</h3>
+        <p class="small" style="margin-bottom:0">Pesquisa do ambiente externo: clientes, concorrentes, setores e oportunidades — o ponto de partida de qualquer estratégia séria.</p></div>
+      <div class="card card--pad"><p class="eyebrow eyebrow--mute">02 · Estratégia</p><h3>Diagnóstico e revisão</h3>
+        <p class="small" style="margin-bottom:0">Elaboração, análise e revisão das estratégias comerciais, financeiras e operacionais, com metas e indicadores claros.</p></div>
+      <div class="card card--pad"><p class="eyebrow eyebrow--mute">03 · Ferramenta</p><h3>Solução customizada com IA</h3>
+        <p class="small" style="margin-bottom:0">Portais e ferramentas desenhados para o seu processo, que organizam o dado e entregam a resposta que a gestão precisa.</p></div>
+      <div class="card card--pad"><p class="eyebrow eyebrow--mute">04 · Resultado</p><h3>Implantação na rotina</h3>
+        <p class="small" style="margin-bottom:0">A ferramenta entra no dia a dia da equipe, para que o ganho seja sustentável e consistente — não um projeto de gaveta.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band band--surface">
+  <div class="container">
+    <div class="grid g2">
+      <div>
+        <p class="eyebrow">Gestão comercial</p>
+        <h2>Vender mais, com previsibilidade.</h2>
+        <ul class="plain">
+          <li>Mapeamento de mercado, clientes e potencial por região e segmento</li>
+          <li>Monitoramento de concorrentes e posicionamento</li>
+          <li>Funil de vendas, carteira e acompanhamento de oportunidades</li>
+          <li>Painéis de metas, desempenho e rentabilidade por cliente e produto</li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Gestão financeira</p>
+        <h2>Decidir com número, não com intuição.</h2>
+        <ul class="plain">
+          <li>Fluxo de caixa, projeções e controle de receitas e despesas</li>
+          <li>Resultado gerencial, margem e custo por linha de negócio</li>
+          <li>Análise de investimentos e viabilidade de projetos</li>
+          <li>Indicadores consolidados para sócios, diretoria e conselho</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <p class="eyebrow">Valor em toda a cadeia</p>
+    <h2>Quando o processo melhora, todo mundo percebe.</h2>
+    <div class="grid g3" style="margin-top:26px">
+      <div><h3>Para os seus clientes</h3><p class="small">Serviços e produtos entregues com mais qualidade, prazo e consistência.</p></div>
+      <div><h3>Para os acionistas</h3><p class="small">Resultados sustentáveis, decisões com lastro em dados e riscos visíveis antes de virarem problema.</p></div>
+      <div><h3>Para os colaboradores</h3><p class="small">Processos claros e ferramentas que eliminam retrabalho e liberam tempo para o que gera valor.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band band--wash band--tight">
+  <div class="container" style="text-align:center">
+    <p class="eyebrow">Vamos conversar</p>
+    <h2>O seu próximo salto de resultado começa com uma conversa.</h2>
+    <p class="lead" style="margin:0 auto 6px;max-width:62ch">Traga o desafio — nós desenhamos o processo e construímos a ferramenta.
+    Uma primeira conversa, sem compromisso, para entender onde a inteligência artificial pode gerar resultado no seu negócio.</p>
+    <div class="btn-row" style="justify-content:center">
+      <a class="btn btn--solid" href="__WHATSAPP_CONSULTORIA__" target="_blank" rel="noopener" data-lead="whatsapp-consultoria-rodape">Conversar no WhatsApp</a>
+      <a class="btn btn--quiet" href="mailto:{EMAIL}?subject=Consultoria%20e%20solu%C3%A7%C3%B5es%20com%20IA" data-lead="email-consultoria-rodape">{EMAIL}</a>
+    </div>
+    <p class="tiny" style="margin-top:14px">Menos planilha solta, mais decisão com dado. Resposta em até um dia útil.</p>
   </div>
 </section>
 """

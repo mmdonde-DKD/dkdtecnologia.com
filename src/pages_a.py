@@ -44,7 +44,7 @@ URGENCIA = """<section class="urgency">
       <div><b data-h>—</b><span>horas</span></div>
       <div><b data-m>—</b><span>min</span></div>
     </div>
-    <p><strong>A opção pelo regime híbrido do Simples fecha em 30 de setembro de 2026</strong> — Resolução CGSN nº 190/2026, com efeito em 1º de janeiro de 2027 e irretratável depois disso.
+    <p><strong>A opção pelo regime híbrido do Simples pode ser cancelada até 30 de novembro de 2026</strong> — depois disso fica irretratável, com efeito em 1º de janeiro de 2027 (Resolução CGSN nº 190/2026).
     O módulo Fiscal e Tributária compara Simples puro, Simples híbrido, Lucro Presumido e Lucro Real sobre os dados reais de cada CNPJ da carteira.</p>
     <a class="btn btn--solid" href="/produtos/fiscal-tributaria/">Ver o módulo Fiscal</a>
   </div>
@@ -250,20 +250,20 @@ HOME = f"""
   <div class="container">
     <div class="hero-grid">
       <div>
-        <p class="eyebrow">Preço</p>
-        <h2>Preço na mesa, não atrás de uma demonstração.</h2>
-        <p class="lead">Quase todo o setor responde “agende uma demonstração”. A DKD publica a tabela.
-        Você calcula o retorno antes de falar com qualquer pessoa — e, se fizer sentido, contrata em minutos.</p>
+        <p class="eyebrow">Consultoria e soluções customizadas com IA</p>
+        <h2>Além das plataformas: o processo desenhado para o seu negócio.</h2>
+        <p class="lead">Da inteligência de mercado à revisão das estratégias comerciais e financeiras, a DKD
+        constrói com a sua equipe as ferramentas que transformam dado em decisão — e decisão em resultado.</p>
         <div class="btn-row">
-          <a class="btn btn--solid" href="/precos/">Ver a tabela completa</a>
-          <a class="btn btn--quiet" href="/contato/">Falar com a DKD</a>
+          <a class="btn btn--solid" href="/consultoria/">Conhecer a consultoria</a>
+          <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-home-consultoria">Conversar no WhatsApp</a>
         </div>
       </div>
       <div class="card card--pad">
-        <p class="eyebrow eyebrow--mute">Prova de retorno</p>
-        <p class="small">Um escritório cobra hoje <strong>de R$ 4.500 a R$ 14.000</strong> por diagnóstico de reforma tributária, por cliente.
-        No plano Profissional do módulo Fiscal, <strong>três diagnósticos vendidos pagam o ano inteiro</strong> — e a carteira tem cem CNPJs.</p>
-        <p class="tiny">Faixa de honorário observada no mercado em 2026. O retorno real depende da carteira e da política de honorários de cada escritório.</p>
+        <p class="eyebrow eyebrow--mute">Proposta sob medida</p>
+        <p class="small">Cada operação tem a sua carteira, o seu volume e o seu momento. Por isso a DKD apresenta
+        <strong>proposta comercial personalizada</strong>, montada a partir de uma conversa sobre o seu cenário.</p>
+        <p class="tiny">Fale com a DKD pelo WhatsApp ou pelo e-mail comercial@dkdtecnologia.com.</p>
       </div>
     </div>
   </div>
@@ -272,7 +272,7 @@ HOME = f"""
 <section class="band band--wash band--tight">
   <div class="container" style="text-align:center">
     <h2>Comece pelo módulo que resolve a sua semana.</h2>
-    <p class="lead" style="margin:0 auto 6px">Sem cartão para experimentar o módulo Fiscal, e com a tabela de preço aberta em todos os outros.</p>
+    <p class="lead" style="margin:0 auto 6px">Converse com a DKD pelo WhatsApp ou por e-mail e receba uma proposta para o seu cenário.</p>
     <div class="btn-row" style="justify-content:center">
       <a class="btn btn--solid" href="/produtos/">Ver os módulos</a>
       <a class="btn btn--quiet" href="/contato/">Falar com a DKD</a>
@@ -337,7 +337,7 @@ PRODUTOS = f"""
       <div><h3>Fonte em toda afirmação</h3><p class="small">Norma, dispositivo, link — ou o dado de mercado com origem e data. Sem lastro, não vai para a tela.</p></div>
       <div><h3>Dossiê exportável</h3><p class="small">Hash dos arquivos, versão do motor, cadeia de raciocínio e quem aprovou. Prova, não relatório.</p></div>
     </div>
-    <div class="btn-row"><a class="btn btn--solid" href="/precos/">Ver preços</a><a class="btn btn--quiet" href="{APP}">Entrar no portal</a></div>
+    <div class="btn-row"><a class="btn btn--solid" href="/contato/">Falar com a DKD</a><a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-produtos">Conversar no WhatsApp</a></div>
   </div>
 </section>
 """
@@ -355,15 +355,15 @@ FISCAL = """
       <div class="btn-row">
         <a class="btn btn--solid" href="/contato/">Agendar conversa técnica</a>
         <a class="btn btn--portal" href="__PORTAL_FISCAL__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
-        <a class="btn btn--quiet" href="/precos/">Ver preços</a>
+        <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-hero">Conversar no WhatsApp</a>
       
       </div>
     </div>
     <div class="card card--pad">
       <p class="eyebrow eyebrow--warn">Prazo em vigor</p>
-      <h3>30 de setembro de 2026</h3>
-      <p class="small">Fim da janela de opção pelo regime híbrido do Simples Nacional (Resolução CGSN nº 190/2026).
-      Efeito em 1º de janeiro de 2027, cancelável até 30 de novembro e irretratável depois disso.</p>
+      <h3>30 de novembro de 2026</h3>
+      <p class="small">Último dia para cancelar a opção pelo regime híbrido do Simples Nacional feita até 30 de setembro
+      (Resolução CGSN nº 190/2026). Depois disso a escolha fica irretratável, com efeito em 1º de janeiro de 2027.</p>
       <p class="small" style="margin-bottom:0"><strong>1º de janeiro de 2027:</strong> o Simples entra em todos os modelos,
       a CBS passa a ser cobrada integralmente, PIS e COFINS acabam e o IPI vai a zero.</p>
     </div>
@@ -470,9 +470,9 @@ FISCAL = """
       <details><summary>O que acontece quando a norma muda?</summary><div class="ans">Há um acompanhamento diário do Diário Oficial, do portal do CGIBS e do Portal da NF-e. O compromisso é refletir a norma publicada no corpus em até três dias úteis, e qualquer análise feita sob norma anterior recebe alerta na tela. A alíquota de referência é parâmetro configurável — nunca constante no código.</div></details>
       <details><summary>Quem assina o parecer?</summary><div class="ans">O contador responsável, com CRC. A ferramenta produz insumo técnico com a cadeia de evidência anexada; a decisão tributária e a assinatura são do profissional habilitado. Isso está escrito no contrato e é a razão de o dossiê existir.</div></details>
       <details><summary>Meus dados ficam onde?</summary><div class="ans">Em infraestrutura no Brasil, com o provedor de modelos configurado para não reter o conteúdo enviado. Se a sua política interna exigir que o SPED não saia da máquina do escritório, existe a modalidade local licenciada — fale com a DKD.</div></details>
-      <details><summary>Integra com o meu sistema contábil?</summary><div class="ans">O upload direto funciona com qualquer sistema, desde o primeiro dia. Integrações diretas com softwares contábeis são contratadas por módulo — veja a página de preços ou fale com a DKD sobre o seu sistema.</div></details>
+      <details><summary>Integra com o meu sistema contábil?</summary><div class="ans">O upload direto funciona com qualquer sistema, desde o primeiro dia. Integrações diretas com softwares contábeis são contratadas por módulo — fale com a DKD sobre o seu sistema.</div></details>
     </div>
-    <div class="btn-row"><a class="btn btn--solid" href="/precos/">Ver preços do módulo</a><a class="btn btn--quiet" href="/contato/">Falar com a DKD</a></div>
+    <div class="btn-row"><a class="btn btn--solid" href="/contato/">Solicitar proposta</a><a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-fiscal-rodape">Conversar no WhatsApp</a></div>
   </div>
 </section>
 """
@@ -488,11 +488,11 @@ GESTAO = """
       Você sobe os extratos da pessoa física e da jurídica, a ferramenta classifica, separa o que é retirada do que é despesa da empresa,
       e mostra o caixa dos próximos noventa dias com o que já está contratado.</p>
       <div class="btn-row">
-        <a class="btn btn--solid" href="/cadastro/" data-lead="gestao-teste">Testar 30 dias grátis</a>
+        <a class="btn btn--solid" href="/contato/" data-lead="gestao-contato">Falar com a DKD</a>
         <a class="btn btn--portal" href="__PORTAL_GESTAO__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
-        <a class="btn btn--quiet" href="/precos/">Ver preços</a>
+        <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-hero">Conversar no WhatsApp</a>
       </div>
-      <p class="tiny" style="margin-top:14px">Teste completo no seu computador, sem cartão. Os extratos não passam pelos servidores da DKD.</p>
+      <p class="tiny" style="margin-top:14px">Os extratos são processados no seu computador e não passam pelos servidores da DKD.</p>
     </div>
     <div class="card card--pad">
       <p class="eyebrow eyebrow--mute">O sintoma</p>
@@ -557,7 +557,7 @@ GESTAO = """
       <div><h3>Profissional autônomo com CNPJ</h3><p class="small">Médico, advogado, engenheiro, consultor — quem emite nota pela empresa e vive do que retira dela.</p></div>
       <div><h3>Escritório que atende esse perfil</h3><p class="small">O contador usa como camada de organização antes do fechamento e devolve ao cliente um painel que ele entende sozinho.</p></div>
     </div>
-    <div class="btn-row"><a class="btn btn--solid" href="/cadastro/" data-lead="gestao-teste-rodape">Testar 30 dias grátis</a><a class="btn" href="/precos/">Ver preços</a><a class="btn btn--quiet" href="/contato/">Falar com a DKD</a></div>
+    <div class="btn-row"><a class="btn btn--solid" href="/contato/" data-lead="gestao-contato-rodape">Solicitar proposta</a><a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-gestao-rodape">Conversar no WhatsApp</a></div>
   </div>
 </section>
 """
@@ -580,7 +580,7 @@ ALPHA = f"""
       <div class="btn-row">
         <a class="btn btn--solid" href="/contato/">Falar com a DKD</a>
         <a class="btn btn--portal" href="__PORTAL_ALPHA__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
-        <a class="btn btn--quiet" href="/precos/">Ver preços</a>
+        <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-hero">Conversar no WhatsApp</a>
       
       </div>
     </div>
@@ -644,7 +644,7 @@ ALPHA = f"""
       <details><summary>Os dados são em tempo real?</summary><div class="ans">Os dados de mercado têm defasagem inerente à fonte pública utilizada, e essa defasagem aparece na tela junto com o número. A ferramenta é de análise e triagem — não é plataforma de negociação.</div></details>
       <details><summary>Posso exportar o que a ferramenta produz?</summary><div class="ans">Sim, com os critérios aplicados, as fontes e a data-base registrados no próprio arquivo — para você reproduzir a análise depois e entender por que a lista era aquela naquele dia.</div></details>
     </div>
-    <div class="btn-row"><a class="btn btn--solid" href="/precos/">Ver preços</a><a class="btn btn--quiet" href="/produtos/asset-intelligence/">Ver o Asset Intelligence</a></div>
+    <div class="btn-row"><a class="btn btn--solid" href="/contato/">Solicitar proposta</a><a class="btn btn--quiet" href="/produtos/asset-intelligence/">Ver o Asset Intelligence</a></div>
   </div>
 </section>
 """
@@ -662,7 +662,7 @@ ASSET = f"""
       <div class="btn-row">
         <a class="btn btn--solid" href="/contato/">Falar com a DKD</a>
         <a class="btn btn--portal" href="__PORTAL_ASSET__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
-        <a class="btn btn--quiet" href="/precos/">Ver preços</a>
+        <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-hero">Conversar no WhatsApp</a>
       
       </div>
     </div>
@@ -732,7 +732,7 @@ ASSET = f"""
         </tbody>
       </table>
     </div>
-    <div class="btn-row"><a class="btn btn--solid" href="/precos/">Ver preços</a><a class="btn btn--quiet" href="/produtos/alpha-invest/">Ver o Alpha Invest</a></div>
+    <div class="btn-row"><a class="btn btn--solid" href="/contato/">Solicitar proposta</a><a class="btn btn--quiet" href="/produtos/alpha-invest/">Ver o Alpha Invest</a></div>
   </div>
 </section>
 """

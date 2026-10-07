@@ -516,8 +516,8 @@ details .ans{padding:0 0 20px;color:var(--txt-2);max-width:72ch}
 .foot-grid li{margin-bottom:9px}
 .foot-grid a{color:var(--txt-2);text-decoration:none}
 .foot-grid a:hover{color:var(--accent)}
-.foot-legal{border-top:1px solid var(--line);margin-top:40px;padding-top:26px;display:flex;flex-wrap:wrap;gap:14px 30px;align-items:flex-start}
-.foot-legal p{font-size:.81rem;color:var(--txt-3);margin:0;max-width:80ch;line-height:1.6}
+.foot-legal{border-top:1px solid var(--line);margin-top:40px;padding-top:26px;display:grid;gap:12px}
+.foot-legal p{font-size:.81rem;color:var(--txt-3);margin:0;max-width:none;line-height:1.6;text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto}
 .foot-legal strong{color:var(--txt-2)}
 
 /* ------------------------------------------------------------ diagrama */
@@ -541,12 +541,12 @@ JS = r"""
     var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false');});}
 
   // Contagem regressiva para o fim da janela de opção pelo regime híbrido.
-  // TODO: revisar a data quando a janela de setembro/2026 se encerrar.
-  var alvo=new Date('2026-09-30T23:59:59-03:00');
+  // Alvo: fim do prazo de cancelamento da opção (30/11/2026). Revisar depois disso.
+  var alvo=new Date('2026-11-30T23:59:59-03:00');
   document.querySelectorAll('[data-count]').forEach(function(el){
     function tick(){
       var d=alvo-new Date();
-      if(d<0){el.innerHTML='<p class="mono">A janela de 30/09/2026 encerrou. Fale com a DKD sobre os próximos marcos.</p>';return;}
+      if(d<0){el.innerHTML='<p class="mono">O prazo de 30/11/2026 encerrou. Fale com a DKD sobre os próximos marcos.</p>';return;}
       var dias=Math.floor(d/864e5),h=Math.floor(d/36e5)%24,m=Math.floor(d/6e4)%60;
       el.querySelector('[data-d]').textContent=dias;
       el.querySelector('[data-h]').textContent=('0'+h).slice(-2);

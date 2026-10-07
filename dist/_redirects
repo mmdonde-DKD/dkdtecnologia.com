@@ -10,4 +10,9 @@ https://www.dkdtecnologia.com/*  https://dkdtecnologia.com/:splat  301
 /asset                  /produtos/asset-intelligence/ 301
 /privacidade            /legal/privacidade/           301
 /termos                 /legal/termos/                301
+/precos                 /contato/                     302
+/precos/                /contato/                     302
+/cadastro               /contato/                     302
+/cadastro/              /contato/                     302
+/consultoria-ia         /consultoria/                 301
 /entrar                 https://app.dkdtecnologia.com 302

@@ -12,12 +12,13 @@ SITE = "https://dkdtecnologia.com"
 APP = "https://app.dkdtecnologia.com"
 
 # --------------------------------------------------------------- identidade
-RAZAO = "DKD Tecnologia e Inovação Ltda"
+RAZAO = "DKD Tecnologia e Inovação"
 MARCA = "DKD Tecnologia e Inovação"
 CNPJ = "59.890.881/0001-06"
 CIDADE = "Caxias do Sul / RS"
 EMAIL = "comercial@dkdtecnologia.com"
-EMAIL_DPO = "privacidade@dkdtecnologia.com"
+# único e-mail publicado no site (decisão de 07/10/2026), inclusive para LGPD
+EMAIL_DPO = EMAIL
 # ------------------------------------------------- o que você preenche
 # WhatsApp comercial, só dígitos, com 55 e DDD. Enquanto ficar como está,
 # o botão flutuante simplesmente não aparece — nada quebra na tela.
@@ -144,7 +145,7 @@ ROTA_MOD["/cadastro/"] = "gestao"     # o teste grátis é do módulo de Gestão
 NAV = [
     ("Módulos", "/produtos/"),
     ("Portais", "/portais/"),
-    ("Preços", "/precos/"),
+    ("Consultoria", "/consultoria/"),
     ("Segurança", "/seguranca/"),
     ("Sobre", "/sobre/"),
     ("Contato", "/contato/"),
@@ -204,8 +205,8 @@ def footer(spa: bool = False) -> str:
     <div class="foot-grid">
       <div>
         {marca(classe="marca--foot")}
-        <p class="tiny" style="margin-top:16px;max-width:36ch">Ferramentas de análise financeira, fiscal e de investimentos.
-        Motor determinístico, IA que cita a fonte, e o dossiê que sustenta a decisão.</p>
+        <p class="tiny" style="margin-top:16px;max-width:36ch">Plataformas de análise financeira, fiscal e de investimentos, e consultoria em
+        processos de gestão comercial e financeira com o uso de IA.</p>
       </div>
       <div>
         <h4>Módulos {SUITE}</h4>
@@ -216,9 +217,8 @@ def footer(spa: bool = False) -> str:
         <ul>
           <li><a href="{href('/sobre/')}">Sobre a DKD</a></li>
           <li><a href="{href('/seguranca/')}">Segurança e LGPD</a></li>
-          <li><a href="{href('/precos/')}">Preços</a></li>
+          <li><a href="{href('/consultoria/')}">Consultoria com IA</a></li>
           <li><a href="{href('/diagnostico/')}">Diagnóstico gratuito</a></li>
-          <li><a href="{href('/cadastro/')}">Teste grátis — Gestão Financeira</a></li>
           <li><a href="{href('/contato/')}">Contato</a></li>
         </ul>
       </div>
@@ -228,7 +228,6 @@ def footer(spa: bool = False) -> str:
           <li><a href="{APP}">Entrar no portal</a></li>
           <li><a href="{href('/legal/privacidade/')}">Privacidade</a></li>
           <li><a href="{href('/legal/termos/')}">Termos de uso</a></li>
-          <li><a href="mailto:{EMAIL_DPO}">Encarregado (DPO)</a></li>
         </ul>
       </div>
     </div>
@@ -336,6 +335,7 @@ def formulario(origem: str, botao: str, msg_placeholder: str, compacto: bool = F
           <div class="field"><label for="mod-{origem}">Módulo de interesse</label>
             <select id="mod-{origem}" name="modulo">{opcoes}
               <option value="Mais de um módulo">Mais de um módulo</option>
+              <option value="Consultoria e soluções customizadas com IA">Consultoria e soluções customizadas com IA</option>
               <option value="Ainda não sei">Ainda não sei</option>
             </select></div>
         </div>{extra}

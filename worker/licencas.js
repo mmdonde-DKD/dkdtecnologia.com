@@ -20,7 +20,7 @@
 //   LICENCA_CHAVE_PRIVADA  Secret · JWK da chave ECDSA P-256 (gerada no DKD_Chaves_Licenca.html)
 //   ADMIN_TOKEN            Secret · senha longa do painel /admin
 //   RESEND_API_KEY         Secret · envio de e-mail pelo Resend (o mesmo do formulário de contato)
-//   REMETENTE_LICENCAS     ex.: "DKD Tecnologia <licencas@dkdtecnologia.com>" (senão usa REMETENTE)
+//   REMETENTE_LICENCAS     ex.: "DKD Tecnologia e Inovação <comercial@dkdtecnologia.com>" (senão usa REMETENTE)
 //   TURNSTILE_SECRET       Secret · anti-robô do formulário de cadastro
 //   DOWNLOAD_URL           opcional · link do download que vai no e-mail de boas-vindas
 //   AVALIACAO_DIAS         opcional · padrão 30
@@ -239,7 +239,7 @@ const ipDe = (request) => request.headers.get("CF-Connecting-IP") || "";
 
 // ------------------------------------------------------------------ e-mail
 async function enviarEmail(env, { para, assunto, texto, html }) {
-  const remetente = env.REMETENTE_LICENCAS || env.REMETENTE || "DKD Tecnologia <licencas@dkdtecnologia.com>";
+  const remetente = env.REMETENTE_LICENCAS || env.REMETENTE || "DKD Tecnologia e Inovação <comercial@dkdtecnologia.com>";
   if (env.MODO_TESTE === "1") {
     await roda(env, "INSERT INTO emails_teste (para, assunto, texto, criado_em) VALUES (?,?,?,?)",
       para, assunto, texto, agoraISO());
@@ -282,7 +282,7 @@ function moldura(titulo, corpoHtml) {
 </td></tr>
 <tr><td style="padding:26px 28px;font-size:15px;line-height:1.6">${corpoHtml}</td></tr>
 <tr><td style="padding:16px 28px 22px;font-size:12px;line-height:1.5;color:#64748b;border-top:1px solid #e2e8f0">
-  DKD Tecnologia e Inovação Ltda · CNPJ 59.890.881/0001-06 · Caxias do Sul/RS<br>
+  DKD Tecnologia e Inovação · CNPJ 59.890.881/0001-06 · Caxias do Sul/RS<br>
   comercial@dkdtecnologia.com · <a href="${SITE}" style="color:#1d6fb8">dkdtecnologia.com</a><br>
   Você recebe este e-mail porque se cadastrou no site da DKD. Dados tratados conforme a
   <a href="${SITE}/legal/privacidade/" style="color:#1d6fb8">Política de Privacidade</a>.
@@ -323,7 +323,7 @@ A internet só é usada para ativar e renovar a licença e para buscar a taxa CD
 
 Série da sua licença: ${cli.serie}
 
-DKD Tecnologia e Inovação Ltda · comercial@dkdtecnologia.com · ${SITE}`;
+DKD Tecnologia e Inovação · comercial@dkdtecnologia.com · ${SITE}`;
   return { assunto: `Seu acesso ao DKD Financial Tools AI — ${dias} dias grátis`, html, texto };
 }
 
@@ -339,7 +339,7 @@ function emailCodigo(cli, codigo, rotulo) {
 Vale por ${CODIGO_MIN} minutos e só funciona no computador que o pediu${rotulo ? " (" + rotulo + ")" : ""}.
 Se não foi você, ignore este e-mail — nada é ativado sem o código.
 
-DKD Tecnologia e Inovação Ltda · ${SITE}`;
+DKD Tecnologia e Inovação · ${SITE}`;
   return { assunto: `Código de ativação: ${c}`, html, texto };
 }
 
@@ -355,7 +355,7 @@ Abra o portal, vá em Cadastro > Licença e operador e cole a chave no campo "Ch
 
 ${chave}
 
-DKD Tecnologia e Inovação Ltda · ${SITE}`;
+DKD Tecnologia e Inovação · ${SITE}`;
   return { assunto: "Sua chave de licença — DKD Financial Tools AI", html, texto };
 }
 

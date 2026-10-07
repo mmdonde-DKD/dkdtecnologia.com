@@ -30,6 +30,9 @@ def liga_portais(html, local: bool):
     """
     for chave, (arquivo, url) in PORTAIS.items():
         html = html.replace("__PORTAL_%s__" % chave.upper(), arquivo if local else url)
+    html = html.replace("__WHATSAPP_CONSULTORIA__", shell.whats_link(
+        "Olá! Vim pelo site da DKD e quero conversar sobre consultoria e soluções customizadas com IA."))
+    html = html.replace("__WHATSAPP__", shell.whats_link())
     if local:
         # sem servidor no ar, "Entrar no portal" leva à área logada de exemplo,
         # que é de onde a demonstração abre cada portal de verdade
@@ -93,9 +96,12 @@ PAGES = [
     ("/portais/", f"Portais {SUITE} — DKD Tecnologia e Inovação",
      "Acesso aos cinco portais da DKD: Fiscal e Tributária, Planejamento e Gestão Financeira, Alpha Invest AI, Asset Intelligence AI e o Portal Integrado.",
      B.PORTAIS_PAGE, True),
-    ("/precos/", f"Preços {SUITE} — DKD Tecnologia e Inovação",
-     "Tabela pública dos quatro módulos, adicionais e condições de contratação. Sem “agende uma demonstração”.",
-     B.PRECOS, True),
+    # /precos/ e /cadastro/ fora do ar desde 07/10/2026: a DKD vai medir o apetite do
+    # mercado pelo WhatsApp e pelo e-mail antes de publicar tabela ou teste grátis.
+    # O conteúdo segue em pages_b.py (PRECOS, CADASTRO) — basta voltar a linha aqui.
+    ("/consultoria/", "Consultoria e soluções customizadas com IA — DKD Tecnologia e Inovação",
+     "Consultoria em gestão estratégica, comercial e financeira, da inteligência de mercado à ferramenta customizada com IA. Fale com a DKD pelo WhatsApp ou por e-mail.",
+     B.CONSULTORIA, True),
     ("/seguranca/", "Segurança, privacidade e LGPD — DKD Tecnologia e Inovação",
      "Papéis de controlador e operador, onde o dado fica, controle de acesso, medidas do artigo 46 e o que a DKD garante e não garante.",
      B.SEGURANCA, True),
@@ -105,9 +111,6 @@ PAGES = [
     ("/contato/", "Contato — DKD Tecnologia e Inovação",
      "Fale com quem construiu a ferramenta. Resposta em até um dia útil.",
      B.CONTATO, True),
-    ("/cadastro/", f"Teste grátis por 30 dias — {SUITE} · Gestão Financeira",
-     "Cadastre-se, baixe o portal de Planejamento, Controle e Gestão Financeira e ative com o código enviado ao seu e-mail. 30 dias completos, sem cartão.",
-     B.CADASTRO, True),
     ("/legal/privacidade/", "Política de Privacidade — DKD Tecnologia e Inovação",
      "Como a DKD trata dados pessoais, em quais papéis, por quanto tempo e com quem compartilha.",
      B.PRIVACIDADE, True),
@@ -188,6 +191,11 @@ https://www.dkdtecnologia.com/*  https://dkdtecnologia.com/:splat  301
 /asset                  /produtos/asset-intelligence/ 301
 /privacidade            /legal/privacidade/           301
 /termos                 /legal/termos/                301
+/precos                 /contato/                     302
+/precos/                /contato/                     302
+/cadastro               /contato/                     302
+/cadastro/              /contato/                     302
+/consultoria-ia         /consultoria/                 301
 /entrar                 https://app.dkdtecnologia.com 302
 """
 

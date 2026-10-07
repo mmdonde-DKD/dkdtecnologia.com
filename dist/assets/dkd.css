@@ -471,8 +471,8 @@ details .ans{padding:0 0 20px;color:var(--txt-2);max-width:72ch}
 .foot-grid li{margin-bottom:9px}
 .foot-grid a{color:var(--txt-2);text-decoration:none}
 .foot-grid a:hover{color:var(--accent)}
-.foot-legal{border-top:1px solid var(--line);margin-top:40px;padding-top:26px;display:flex;flex-wrap:wrap;gap:14px 30px;align-items:flex-start}
-.foot-legal p{font-size:.81rem;color:var(--txt-3);margin:0;max-width:80ch;line-height:1.6}
+.foot-legal{border-top:1px solid var(--line);margin-top:40px;padding-top:26px;display:grid;gap:12px}
+.foot-legal p{font-size:.81rem;color:var(--txt-3);margin:0;max-width:none;line-height:1.6;text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto}
 .foot-legal strong{color:var(--txt-2)}
 
 /* ------------------------------------------------------------ diagrama */
