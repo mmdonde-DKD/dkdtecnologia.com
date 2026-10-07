@@ -1,0 +1,11 @@
+{
+  "name": "dkdtecnologia-com",
+  "private": true,
+  "description": "Site institucional dkdtecnologia.com — Worker com assets estáticos (dist/ já gerado).",
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.148.0"
+  }
+}

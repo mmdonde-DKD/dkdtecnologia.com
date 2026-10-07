@@ -24,3 +24,6 @@ site/
 ferramentas/assets/
 ferramentas/*.zip
 ferramentas/*.css
+
+# dependências do npm (Workers Builds instala sozinho)
+node_modules/
