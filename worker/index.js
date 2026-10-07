@@ -191,9 +191,33 @@ async function resumoDiario(env) {
   return ok ? `enviado:${leads.length}` : "falha-envio";
 }
 
+// Subdomínios da área do cliente — protegidos pelo Cloudflare Access (código por
+// e-mail). Quem chega aqui já passou pelo Access; a lista de e-mails autorizados é
+// mantida pelo Autenticador DKD, no computador da DKD (fora do site).
+const HOSTS_CLIENTE = new Set(["app.dkdtecnologia.com", "atc.dkdtecnologia.com"]);
+
+async function areaCliente(request, env, url) {
+  if (url.pathname === "/api/eu") {
+    const email = request.headers.get("Cf-Access-Authenticated-User-Email") || "";
+    return new Response(JSON.stringify({ email }), {
+      headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
+    });
+  }
+  if (url.pathname === "/" || url.pathname === "/index.html") {
+    const r = await env.ASSETS.fetch(new Request(new URL("/area-cliente/", url), request));
+    const h = new Headers(r.headers);
+    h.set("Cache-Control", "no-store");
+    h.set("X-Robots-Tag", "noindex, nofollow");
+    return new Response(r.body, { status: r.status, headers: h });
+  }
+  return env.ASSETS.fetch(request);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (HOSTS_CLIENTE.has(url.hostname)) return areaCliente(request, env, url);
 
     if (url.pathname === "/api/contato") {
       if (request.method === "POST") return recebeContato(request, env);

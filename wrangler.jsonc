@@ -21,7 +21,10 @@
     // camada de assets: sem isto, o navegador recebe 405 ao enviar o formulário
     // de contato ou de cadastro, e a página 404 no lugar do /admin — a camada
     // de assets atende primeiro as navegações e só aceita GET.
-    "run_worker_first": ["/api/*", "/admin", "/admin/*"]
+    // true desde 08/10/2026: o Worker precisa ver o HOST de cada pedido para servir a
+    // área do cliente em app.dkdtecnologia.com e atc.dkdtecnologia.com (atrás do
+    // Cloudflare Access). No domínio principal ele só repassa para os assets.
+    "run_worker_first": true
   },
 
   // Mantém as variáveis criadas no painel (Settings > Variables and Secrets)

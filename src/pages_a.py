@@ -354,7 +354,7 @@ FISCAL = """
       É essa pergunta que este módulo responde.</p>
       <div class="btn-row">
         <a class="btn btn--solid" href="/contato/">Agendar conversa técnica</a>
-        <a class="btn btn--portal" href="__PORTAL_FISCAL__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
+        <a class="btn btn--portal" href="/portais/#tela-fiscal">Ver tela de exemplo</a>
         <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-hero">Conversar no WhatsApp</a>
       
       </div>
@@ -489,7 +489,7 @@ GESTAO = """
       e mostra o caixa dos próximos noventa dias com o que já está contratado.</p>
       <div class="btn-row">
         <a class="btn btn--solid" href="/contato/" data-lead="gestao-contato">Falar com a DKD</a>
-        <a class="btn btn--portal" href="__PORTAL_GESTAO__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
+        <a class="btn btn--portal" href="/portais/#tela-gestao">Ver tela de exemplo</a>
         <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-hero">Conversar no WhatsApp</a>
       </div>
       <p class="tiny" style="margin-top:14px">Os extratos são processados no seu computador e não passam pelos servidores da DKD.</p>
@@ -579,7 +579,7 @@ ALPHA = f"""
       <strong>Quem escolhe continua sendo você.</strong></p>
       <div class="btn-row">
         <a class="btn btn--solid" href="/contato/">Falar com a DKD</a>
-        <a class="btn btn--portal" href="__PORTAL_ALPHA__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
+        <a class="btn btn--portal" href="/portais/#tela-alpha">Ver tela de exemplo</a>
         <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-hero">Conversar no WhatsApp</a>
       
       </div>
@@ -661,7 +661,7 @@ ASSET = f"""
       Este módulo acompanha e avisa — <strong>nos limites que você mesmo definiu</strong>.</p>
       <div class="btn-row">
         <a class="btn btn--solid" href="/contato/">Falar com a DKD</a>
-        <a class="btn btn--portal" href="__PORTAL_ASSET__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
+        <a class="btn btn--portal" href="/portais/#tela-asset">Ver tela de exemplo</a>
         <a class="btn btn--quiet" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-hero">Conversar no WhatsApp</a>
       
       </div>

@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /app-preview/
+Disallow: /area-cliente/
 Disallow: /downloads/
 Disallow: /admin
 

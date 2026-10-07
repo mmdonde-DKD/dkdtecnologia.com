@@ -296,6 +296,16 @@ code{font-family:var(--font-mono);font-size:.86em;background:var(--surface-2);bo
 .mod .chip{margin-top:22px;align-self:flex-start}
 .mod .tagline{color:var(--txt-2);margin-bottom:18px}
 .mod .foot{margin-top:auto;padding-top:20px}
+.telas{display:grid;gap:26px}
+.mod.tela{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:0;align-items:start;scroll-margin-top:90px}
+.mod.tela::before{grid-column:1/-1}
+.mod.tela > *{padding-left:0;padding-right:0}
+.mod.tela .tela-img{margin:0;padding:22px 0 18px 22px}
+.tela .tela-img img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line-2)}
+.tela .tela-img figcaption{margin-top:8px;color:var(--txt-3)}
+.mod.tela .tela-txt{padding:4px 26px 24px}
+.tela .tela-txt .chip{margin-top:22px}
+@media (max-width:900px){.mod.tela{grid-template-columns:minmax(0,1fr)}.mod.tela .tela-img{padding:18px 18px 0}}
 .mod .go{color:var(--mod-c,var(--accent));font-family:var(--font-display);font-weight:600;font-size:.94rem;text-decoration:none}
 .mod--gestao{--mod-c:var(--m-gestao)}
 .mod--alpha{--mod-c:var(--m-alpha)}

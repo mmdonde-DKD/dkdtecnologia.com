@@ -69,6 +69,12 @@ PAGINA_404 = """
 </section>
 """
 
+# mostra o e-mail de quem entrou pelo Cloudflare Access (vem do Worker, /api/eu)
+AREA_JS = """fetch('/api/eu').then(function(r){return r.ok?r.json():null}).then(function(j){
+  if(j&&j.email){var el=document.querySelector('[data-quem]');if(el)el.textContent=', '+j.email;}
+}).catch(function(){});
+"""
+
 M = MODULOS
 PAGES = [
     # (caminho, título, descrição, corpo, entra_no_sitemap)
@@ -93,8 +99,8 @@ PAGES = [
     ("/diagnostico/", "Diagnóstico gratuito de regime tributário — DKD Tecnologia e Inovação",
      "Envie o SPED de até três CNPJs e receba em dois dias úteis o comparativo entre Simples puro, híbrido, Presumido e Real, com o dispositivo legal citado. Sem cartão.",
      B.DIAGNOSTICO, True),
-    ("/portais/", f"Portais {SUITE} — DKD Tecnologia e Inovação",
-     "Acesso aos cinco portais da DKD: Fiscal e Tributária, Planejamento e Gestão Financeira, Alpha Invest AI, Asset Intelligence AI e o Portal Integrado.",
+    ("/portais/", f"Telas de exemplo — {SUITE} — DKD Tecnologia e Inovação",
+     "Uma tela real de cada módulo do DKD Financial Tools AI, com dados fictícios: Fiscal e Tributária, Gestão Financeira, Alpha Invest AI e Asset Intelligence AI.",
      B.PORTAIS_PAGE, True),
     # /precos/ e /cadastro/ fora do ar desde 07/10/2026: a DKD vai medir o apetite do
     # mercado pelo WhatsApp e pelo e-mail antes de publicar tabela ou teste grátis.
@@ -117,6 +123,9 @@ PAGES = [
     ("/legal/termos/", "Termos de Uso — DKD Tecnologia e Inovação",
      "Licença de uso, natureza do resultado, obrigações, propriedade intelectual e limitação de responsabilidade.",
      B.TERMOS, True),
+    ("/area-cliente/", "Área do cliente — DKD Tecnologia e Inovação",
+     "Área restrita a clientes autorizados da DKD.",
+     B.AREA_CLIENTE, False),
     ("/app-preview/", "Prévia do portal — DKD Tecnologia e Inovação",
      "Prévia interna da área logada. Não indexar.",
      B.APP_HUB, False),
@@ -171,6 +180,9 @@ HEADERS = """/*
 /app-preview/*
   X-Robots-Tag: noindex, nofollow
 
+/area-cliente/*
+  X-Robots-Tag: noindex, nofollow
+
 /downloads/*
   Cache-Control: no-cache
   X-Robots-Tag: noindex, nofollow
@@ -202,6 +214,7 @@ REDIRECTS = """# www -> apex fica numa Redirect Rule do painel: em Workers o _re
 ROBOTS = f"""User-agent: *
 Allow: /
 Disallow: /app-preview/
+Disallow: /area-cliente/
 Disallow: /downloads/
 Disallow: /admin
 
@@ -399,6 +412,13 @@ def build_static():
     os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
     for img in IMAGENS:
         shutil.copy(os.path.join(ATIVOS, img), os.path.join(OUT, "assets", img))
+
+    # telas de exemplo (galeria de /portais/ e área do cliente)
+    destino_demo = os.path.join(OUT, "assets", "demo")
+    if os.path.isdir(destino_demo):
+        shutil.rmtree(destino_demo)
+    shutil.copytree(os.path.join(ATIVOS, "demo"), destino_demo)
+    write("assets/area-cliente.js", AREA_JS)
 
     shutil.copy(os.path.join(ATIVOS, "fonts.css"), os.path.join(OUT, "assets", "fonts.css"))
     destino_fontes = os.path.join(OUT, "assets", "fonts")

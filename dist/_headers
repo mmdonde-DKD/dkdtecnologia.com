@@ -11,6 +11,9 @@
 /app-preview/*
   X-Robots-Tag: noindex, nofollow
 
+/area-cliente/*
+  X-Robots-Tag: noindex, nofollow
+
 /downloads/*
   Cache-Control: no-cache
   X-Robots-Tag: noindex, nofollow

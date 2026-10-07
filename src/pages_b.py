@@ -803,87 +803,118 @@ APP_HUB = f"""
 
 
 # ---------------------------------------------------------------- PORTAIS
-def _cartao(chave, nome, papel, resumo, itens, alvo, chip):
+def _tela(chave, nome, papel, resumo, itens, legenda):
     lis = "".join("<li>%s</li>" % i for i in itens)
     return f"""
-      <article class="mod mod--{chave}">
-        <span class="chip chip--live">{chip}</span>
+    <article class="tela mod mod--{chave}" id="tela-{chave}">
+      <figure class="tela-img">
+        <a href="/assets/demo/tela-{chave}.webp" target="_blank" rel="noopener" title="Abrir a tela em tamanho real">
+          <img src="/assets/demo/tela-{chave}.webp" width="1440" height="900" loading="lazy"
+               alt="Tela de demonstração do módulo {nome}, com dados fictícios"></a>
+        <figcaption class="tiny">{legenda}</figcaption>
+      </figure>
+      <div class="tela-txt">
+        <span class="chip">Tela de exemplo · dados fictícios</span>
         <h3>{nome}</h3>
         <p class="tagline small">{papel}</p>
         <p class="small">{resumo}</p>
         <ul class="ticks small">{lis}</ul>
-        <div class="foot">
-          <a class="btn btn--portal" href="{alvo}" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
+        <div class="btn-row">
+          <a class="btn btn--solid btn--sm" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-tela-{chave}">Pedir uma demonstração</a>
+          <a class="btn btn--quiet btn--sm" href="/produtos/">Ver o módulo</a>
         </div>
-      </article>"""
+      </div>
+    </article>"""
 
 
 PORTAIS_PAGE = f"""
 <section class="band band--hero band--surface">
   <div class="container">
-    <p class="eyebrow">Acesso aos portais</p>
-    <h1>Os cinco portais da DKD, num lugar só.</h1>
-    <p class="lead" style="margin-top:18px">Cada módulo roda no seu próprio portal, com o mesmo cabeçalho, o mesmo padrão de
-    evidência e a mesma camada de licença. Abra qualquer um daqui.</p>
+    <p class="eyebrow">Portais · telas de exemplo</p>
+    <h1>Veja como é por dentro — antes de falar com a gente.</h1>
+    <p class="lead" style="margin-top:18px">Uma tela real de cada módulo do DKD Financial Tools AI, preenchida com
+    <strong>dados fictícios</strong>. As ferramentas completas são liberadas para clientes e para demonstrações
+    acompanhadas, com acesso individual por e-mail.</p>
+    <div class="btn-row">
+      <a class="btn btn--solid" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-portais">Pedir uma demonstração</a>
+      <a class="btn btn--quiet" href="{APP}">Já sou cliente — entrar</a>
+    </div>
   </div>
 </section>
 
 <section class="band">
-  <div class="container">
-    <div class="grid g2" style="background:transparent;border:0;gap:18px">
-{_cartao("fiscal", "Análise, Simulação e Inteligência Fiscal e Tributária",
-         "Para o escritório de contabilidade",
-         "A carteira inteira numa tela, comparação de regimes sobre o SPED real e o parecer com o dispositivo citado.",
-         ["Simples puro, híbrido, Presumido e Real lado a lado",
-          "Classificação de CST e cClassTrib com fila de exceção",
-          "Dossiê exportável com hash, versão do motor e data-base"],
-         "__PORTAL_FISCAL__", "Disponível")}
-{_cartao("gestao", "Planejamento, Controle e Gestão Financeira",
-         "Para o dono do negócio",
-         "Extratos de pessoa física e jurídica no mesmo painel, a fronteira entre empresa e dono, e o caixa dos próximos 90 dias.",
-         ["Leitura e classificação de extratos e faturas",
-          "Projeção de caixa de 30, 60 e 90 dias",
-          "Base criptografada, com PIN e senha mestra"],
-         "__PORTAL_GESTAO__", "Disponível")}
-{_cartao("alpha", "Alpha Invest AI",
-         "Para o investidor pessoa física",
-         "Triagem e comparação de ativos da B3 pelos critérios que você define, com a fonte de cada número.",
-         ["Filtros próprios, salvos e reaplicáveis",
-          "Comparação com histórico e origem do dado",
-          "Ferramenta operada por você — não recomenda ativo"],
-         "__PORTAL_ALPHA__", "Disponível")}
-{_cartao("asset", "Asset Intelligence AI",
-         "Para quem já tem carteira montada",
-         "Concentração recalculada a cada aporte, proventos, eventos societários e alertas nos limites que você definiu.",
-         ["Concentração por ativo, setor e emissor",
-          "Proventos e comunicados resumidos com link para a fonte",
-          "Ferramenta operada por você — não recomenda ativo"],
-         "__PORTAL_ASSET__", "Disponível")}
-    </div>
-
-    <article class="mod" style="margin-top:18px;--mod-c:var(--dkd)">
-      <span class="chip chip--live">Hub</span>
-      <h3>Portal Integrado</h3>
-      <p class="tagline small">O caminho curto entre os módulos de investimento</p>
-      <p class="small">Alterna entre Alpha Invest, Asset Intelligence e Investors Profile sem sair da tela, com um acesso só.</p>
-      <div class="foot">
-        <a class="btn btn--portal" href="__PORTAL_HUB__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
-      </div>
-    </article>
+  <div class="container telas">
+{_tela("fiscal", "Análise, Simulação e Inteligência Fiscal e Tributária",
+       "Para o escritório de contabilidade",
+       "Comparação de regimes sobre os dados reais do CNPJ, com a carga mensal e anual de cada um e o destino de cada tributo na reforma.",
+       ["Simples, Presumido e Real lado a lado", "Decomposição da carga por tributo e esfera", "Destino de cada tributo na transição para IBS e CBS"],
+       "Análise tributária e enquadramento de uma empresa fictícia do Simples Nacional.")}
+{_tela("gestao", "Planejamento, Controle e Gestão Financeira",
+       "Para o dono do negócio",
+       "O mês da pessoa física e da jurídica no mesmo painel: o que foi projetado, o que foi realizado e a diferença em cada conta.",
+       ["Extratos PF e PJ classificados automaticamente", "Projetado × realizado por grupo de contas", "Base criptografada, com PIN e senha mestra"],
+       "Dashboard mensal de uma empresa e de um sócio fictícios.")}
+{_tela("alpha", "Alpha Invest AI",
+       "Para o investidor pessoa física",
+       "Triagem e comparação de fundos e ativos pelos critérios que você define, com a fonte de cada número.",
+       ["Filtros por classe, tipo, isenção e indicadores", "Comparação de preço, variação, DY e P/VP", "Ferramenta operada por você — não recomenda ativo"],
+       "Ranking de fundos fictícios (tickers EXMP e DEMO não existem na B3).")}
+{_tela("asset", "Asset Intelligence AI",
+       "Para quem já tem carteira montada",
+       "A carteira teórica que você montou, com rentabilidade, valor financeiro e o efeito dos proventos posição a posição.",
+       ["Rentabilidade com e sem proventos", "Valor inicial, atual e resultado por posição", "Ferramenta operada por você — não recomenda ativo"],
+       "Carteira teórica com empresas e tickers fictícios.")}
   </div>
 </section>
 
 <section class="band band--surface">
   <div class="container">
-    <div class="note note--brand">
+    <div class="note note--warn">
+      <span class="tag">Aviso</span>
+      <p style="margin-bottom:0">Telas ilustrativas com dados fictícios. Nenhum número representa cliente, empresa ou ativo real,
+      e nada nelas constitui recomendação de investimento. {AVISO_CVM}</p>
+    </div>
+    <div class="note note--brand" style="margin-top:18px">
       <span class="tag">Como o acesso funciona</span>
-      <p>A entrada é por código de uso único enviado ao seu e-mail, com papéis distintos, sessão com prazo e revogação
-      imediata. Cada portal é um projeto independente: a atualização de um não derruba os outros, e cada um tem a sua
-      própria política de acesso.</p>
+      <p>Cada pessoa autorizada entra com um código de uso único enviado ao próprio e-mail, com prazo de validade e
+      revogação imediata. Para ver as ferramentas funcionando, peça uma demonstração pelo WhatsApp ou escreva para
+      <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
       <p style="margin-bottom:0"><a href="/seguranca/">Ver a página de segurança e LGPD</a></p>
     </div>
   </div>
 </section>
+"""
+
+
+# ------------------------------------------------------- ÁREA DO CLIENTE
+# Servida em app.dkdtecnologia.com e atc.dkdtecnologia.com, atrás do Cloudflare
+# Access (código por e-mail). Os e-mails autorizados são mantidos pelo
+# Autenticador DKD, que fica só no computador da DKD (pasta _AUTENTICADOR_DKD).
+AREA_CLIENTE = f"""
+<section class="band band--hero band--surface">
+  <div class="container">
+    <p class="eyebrow">Área do cliente</p>
+    <h1>Bem-vindo à DKD<span data-quem></span>.</h1>
+    <p class="lead" style="margin-top:18px">Seu acesso está ativo. Os portais do DKD Financial Tools AI liberados para você
+    aparecem aqui conforme a implantação combinada com a DKD.</p>
+    <div class="btn-row">
+      <a class="btn btn--solid" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-area-cliente">Falar com a DKD</a>
+      <a class="btn btn--quiet" href="/cdn-cgi/access/logout">Sair</a>
+    </div>
+  </div>
+</section>
+<section class="band">
+  <div class="container">
+    <div class="grid g2" style="background:transparent;border:0;gap:18px">
+      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-fiscal"><p class="eyebrow eyebrow--mute">Fiscal e Tributária</p><img src="/assets/demo/tela-fiscal.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
+      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-gestao"><p class="eyebrow eyebrow--mute">Gestão Financeira</p><img src="/assets/demo/tela-gestao.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
+      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-alpha"><p class="eyebrow eyebrow--mute">Alpha Invest AI</p><img src="/assets/demo/tela-alpha.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
+      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-asset"><p class="eyebrow eyebrow--mute">Asset Intelligence AI</p><img src="/assets/demo/tela-asset.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
+    </div>
+    <p class="tiny" style="margin-top:14px">Precisa de outro acesso ou de renovar o prazo? Escreva para <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+  </div>
+</section>
+<script src="/assets/area-cliente.js" defer></script>
 """
 
 
