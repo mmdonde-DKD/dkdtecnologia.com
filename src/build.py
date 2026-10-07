@@ -8,6 +8,7 @@ import os
 import re
 import shutil
 import sys
+import zipfile
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI) if os.path.basename(AQUI) == "src" else AQUI
@@ -15,7 +16,7 @@ sys.path.insert(0, AQUI)
 
 from theme import CSS, JS, FONTS_LINK, JARGAO
 import shell
-from shell import page, topbar, footer, SITE, SUITE, MODULOS, ROTA_MOD, PORTAIS
+from shell import page, topbar, footer, SITE, SUITE, MODULOS, ROTA_MOD, PORTAIS, DOWNLOAD_GESTAO
 import pages_a as A
 import pages_b as B
 
@@ -37,6 +38,8 @@ def liga_portais(html, local: bool):
 
 OUT = os.path.join(RAIZ, "dist")
 ATIVOS = os.path.join(RAIZ, "assets")
+# zips de download dos módulos instaláveis (V10.1_web em diante) — ver copia_downloads()
+DOWNLOADS = os.path.join(RAIZ, "downloads")
 PREVIA = os.path.join(RAIZ, "DKD_Site_Institucional_previa.html")
 
 # imagens copiadas para dist/assets
@@ -102,6 +105,9 @@ PAGES = [
     ("/contato/", "Contato — DKD Tecnologia e Inovação",
      "Fale com quem construiu a ferramenta. Resposta em até um dia útil.",
      B.CONTATO, True),
+    ("/cadastro/", f"Teste grátis por 30 dias — {SUITE} · Gestão Financeira",
+     "Cadastre-se, baixe o portal de Planejamento, Controle e Gestão Financeira e ative com o código enviado ao seu e-mail. 30 dias completos, sem cartão.",
+     B.CADASTRO, True),
     ("/legal/privacidade/", "Política de Privacidade — DKD Tecnologia e Inovação",
      "Como a DKD trata dados pessoais, em quais papéis, por quanto tempo e com quem compartilha.",
      B.PRIVACIDADE, True),
@@ -162,6 +168,10 @@ HEADERS = """/*
 /app-preview/*
   X-Robots-Tag: noindex, nofollow
 
+/downloads/*
+  Cache-Control: no-cache
+  X-Robots-Tag: noindex, nofollow
+
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 """
@@ -184,6 +194,8 @@ https://www.dkdtecnologia.com/*  https://dkdtecnologia.com/:splat  301
 ROBOTS = f"""User-agent: *
 Allow: /
 Disallow: /app-preview/
+Disallow: /downloads/
+Disallow: /admin
 
 Sitemap: {SITE}/sitemap.xml
 """
@@ -312,6 +324,53 @@ def write(path, content):
         f.write(content)
 
 
+# ------------------------------------------------------------- downloads
+# A chave pública da build de TESTE (V10.1_web). Um portal com ela — ou com o
+# carimbo "CHAVE DE TESTE" — nunca vai para o ar: as licenças emitidas pelo
+# servidor de produção não confeririam nele, e o cliente ficaria sem ativar.
+CHAVE_TESTE_SPKI = ("MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE14bQ7qPXM0W87b24y5eXFiYOUcw+"
+                    "Iad72OWbiCQKI0arKf9bAbnGZtZm/ea/ZZ4+5WHIt7HEkCSWMDW6kXJfjA==")
+
+
+def confere_zip(caminho):
+    """(ok, motivo): o zip só é publicado se o portal dentro dele for de produção."""
+    try:
+        with zipfile.ZipFile(caminho) as z:
+            htmls = [n for n in z.namelist() if n.lower().endswith(".html")]
+            if not htmls:
+                return False, "não há nenhum .html dentro do zip"
+            for n in htmls:
+                t = z.read(n).decode("utf-8", "replace")
+                if "const LIC_SERVIDOR" not in t:
+                    continue
+                if "CHAVE DE TESTE" in t or CHAVE_TESTE_SPKI in t:
+                    return False, f"{n} ainda é a build de TESTE — carimbe com a chave de produção no DKD_Chaves_Licenca.html"
+                if "@@PUBKEY@@" in t:
+                    return False, f"{n} está sem a chave pública do emissor"
+                return True, n
+            return False, "nenhum portal DKD dentro do zip"
+    except zipfile.BadZipFile:
+        return False, "o arquivo não é um zip válido"
+
+
+def copia_downloads():
+    """Copia downloads/*.zip para dist/downloads/, barrando build de teste."""
+    publicados = []
+    if not os.path.isdir(DOWNLOADS):
+        return publicados
+    for nome in sorted(os.listdir(DOWNLOADS)):
+        if not nome.lower().endswith(".zip"):
+            continue
+        ok, motivo = confere_zip(os.path.join(DOWNLOADS, nome))
+        if not ok:
+            print(f"!! downloads/{nome} NÃO foi publicado: {motivo}")
+            continue
+        os.makedirs(os.path.join(OUT, "downloads"), exist_ok=True)
+        shutil.copy(os.path.join(DOWNLOADS, nome), os.path.join(OUT, "downloads", nome))
+        publicados.append(nome)
+    return publicados
+
+
 def build_static():
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
@@ -357,6 +416,11 @@ def build_static():
     html404 = html404.replace("<head>", '<head>\n<meta name="robots" content="noindex,nofollow">', 1)
     write("404.html", html404)
 
+    baixar = copia_downloads()
+    if os.path.basename(DOWNLOAD_GESTAO) not in baixar:
+        print("!! ATENÇÃO: sem " + DOWNLOAD_GESTAO.lstrip("/") + " de produção, o botão de download do /cadastro/ "
+              "e o link do e-mail de boas-vindas dão 404. Gere o zip no DKD_Chaves_Licenca.html e salve em downloads/.")
+
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u in urls:
@@ -387,6 +451,8 @@ def to_spa(html):
     out = LINK_RE.sub(sub, html)
     out = out.replace('<form class="form" method="POST" action="/api/contato">',
                       '<form class="form" onsubmit="return false">')
+    out = out.replace('<form class="form" method="POST" action="/api/cadastro"',
+                      '<form class="form" onsubmit="return false"')
     return out
 
 

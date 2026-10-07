@@ -1,0 +1,9 @@
+Pasta dos zips de download dos módulos instaláveis (V10.1_web em diante).
+
+Coloque aqui o DKD_Financial_Tools_AI_Gestao_Financeira.zip gerado pelo
+DKD_Chaves_Licenca.html (portal carimbado com a chave de PRODUÇÃO) e rode
+python3 src/build.py — ele copia o zip para dist/downloads/.
+
+O build recusa, com aviso na tela, qualquer zip cujo portal ainda seja a
+build de TESTE (selo "CHAVE DE TESTE — NÃO COMERCIALIZAR"): as licenças do
+servidor de produção não confeririam nele e o cliente não conseguiria ativar.

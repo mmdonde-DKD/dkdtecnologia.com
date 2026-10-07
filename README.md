@@ -10,7 +10,7 @@ ferramentas/  padroniza_portais.py — aplica a identidade DKD nos portais
 CUSTOMIZAR.md o mapa numerado de tudo que dá para mudar e onde
 ```
 
-15 páginas, identidade azul-noite, fontes próprias (Archivo · Inter · IBM Plex Mono), sem
+16 páginas, identidade azul-noite, fontes próprias (Archivo · Inter · IBM Plex Mono), sem
 nenhuma chamada a servidor de terceiros.
 
 ---
@@ -38,7 +38,12 @@ Precisa ser por servidor: as páginas usam caminhos absolutos (`/assets/…`).
 
 O site roda como o Worker **`dkdtecnologia-com`** (ver `wrangler.jsonc`), ligado a este
 repositório pelo Workers Builds: todo `git push` na `main` publica em 1–2 minutos
-(`PUBLICAR_SITE.bat` faz o push). O `dist/` já vai pronto; o Worker só atende `/api/contato`.
+(`PUBLICAR_SITE.bat` faz o push). O `dist/` já vai pronto; o Worker atende `/api/contato` e,
+desde a V10.1_web, o cadastro e as licenças (seção abaixo).
+
+`run_worker_first` no `wrangler.jsonc` manda `/api/*` e `/admin` direto para o Worker. Sem isso a
+camada de assets atende primeiro as navegações do navegador e responde **405** ao envio dos
+formulários (contato e cadastro) e **404** ao `/admin` — testado com o `wrangler dev` em 05/10/2026.
 
 Variáveis do formulário (Worker → Settings → Variables and Secrets, tipo Secret):
 `RESEND_API_KEY`, `DESTINO`, `REMETENTE`, `TURNSTILE_SECRET`.
@@ -46,6 +51,30 @@ Binding opcional `LEADS` (KV) — se usado, declarar em `wrangler.jsonc`, senão
 
 O redirecionamento `www → apex` **não** funciona pelo `_redirects` em Workers: fazer por
 Rules → Redirect Rules no painel do domínio.
+
+---
+
+## Cadastro e licenças — DKD Financial Tools AI (V10.1_web)
+
+O módulo de Gestão Financeira passou a ser vendido também **para download**: o cliente se
+cadastra em `/cadastro/`, baixa o portal e ativa com um código de 6 números que o servidor manda
+ao e-mail cadastrado. Avaliação de 30 dias contados da primeira ativação.
+
+| Rota | O quê |
+|---|---|
+| `POST /api/cadastro` | formulário do site → cria o cliente no D1 e manda o e-mail de boas-vindas com o download |
+| `POST /api/licenca/codigo` · `/ativar` · `/renovar` | chamadas do portal (CORS aberto, JSON) |
+| `/admin` e `/api/admin/*` | painel da DKD — senha `ADMIN_TOKEN`; proteja também com o Cloudflare Access |
+
+Arquivos: `worker/licencas.js`, `worker/admin.js`, `worker/schema.sql`, `downloads/` (zip do
+portal — o build só publica build de **produção**). Passo a passo completo de implantação
+(D1, segredos, e-mail, Turnstile, Access, chave de produção): `GUIA_DE_IMPLANTACAO.md`, na pasta
+da V10.1_web.
+
+Segredos do Worker (tipo Secret): `LICENCA_CHAVE_PRIVADA`, `ADMIN_TOKEN`, `RESEND_API_KEY`,
+`TURNSTILE_SECRET`; opcionais: `REMETENTE_LICENCAS`, `DOWNLOAD_URL`, `CODIGO_SAL`,
+`AVALIACAO_DIAS`, `LIMITE_DISPOSITIVOS`. Sem o banco `LICENCAS`, as rotas respondem "em
+manutenção" e o resto do site segue no ar.
 
 ---
 
@@ -64,7 +93,9 @@ Rules → Redirect Rules no painel do domínio.
 
 | Onde | O quê |
 |---|---|
-| `src/shell.py` → `TURNSTILE_SITEKEY` | vazio — o formulário de contato está sem proteção anti-robô |
+| `src/shell.py` → `TURNSTILE_SITEKEY` | vazio — os formulários de contato e de cadastro estão sem proteção anti-robô (o cadastro manda e-mail: configure antes de divulgar) |
+| `wrangler.jsonc` → `d1_databases` | comentado até o banco `dkd-licencas` ser criado — sem ele o cadastro responde "em manutenção" |
+| `downloads/` | vazio até o zip de produção ser gerado no `DKD_Chaves_Licenca.html` — sem ele o download do cadastro dá 404 |
 | `src/pages_b.py` → `MINUTA` | privacidade e termos publicados com aviso de minuta, até a revisão jurídica |
 | Formulário de contato | sem `RESEND_API_KEY` e sem KV `LEADS`, o envio falha — configurar um dos dois |
 | Caso do cliente-âncora | espaço reservado na home, sem depoimento inventado |

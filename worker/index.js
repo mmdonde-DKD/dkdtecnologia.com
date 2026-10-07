@@ -1,8 +1,9 @@
 // worker/index.js — ponto de entrada do site dkdtecnologia.com em Cloudflare Workers.
 //
-// As 15 páginas e todos os arquivos de assets/ são servidos direto do
+// As 16 páginas e todos os arquivos de assets/ são servidos direto do
 // diretório estático, sem passar por este código. O Worker só é chamado
-// quando nenhum arquivo corresponde à URL — na prática, só em /api/contato.
+// quando nenhum arquivo corresponde à URL — /api/contato, e desde a V10.1_web
+// também /api/cadastro, /api/licenca/*, /api/admin/* e /admin (worker/licencas.js).
 //
 // Variáveis (Settings > Variables and Secrets, tipo Secret):
 //   RESEND_API_KEY    chave do provedor de e-mail transacional
@@ -15,6 +16,9 @@
 // Tudo o que é opcional degrada em silêncio: sem chave de Turnstile ele não
 // confere; sem KV ele não guarda; sem chave de e-mail ele avisa que falhou.
 // O visitante nunca vê erro de configuração.
+
+import { rotearLicencas } from "./licencas.js";
+import { paginaAdmin } from "./admin.js";
 
 const CAMPOS = ["nome", "empresa", "email", "telefone", "assunto",
                 "modulo", "cnpjs", "mensagem", "origem"];
@@ -125,6 +129,11 @@ export default {
         headers: { Allow: "POST", "Content-Type": "text/plain; charset=utf-8" },
       });
     }
+
+    // V10.1_web — cadastro, licenças (/api/cadastro, /api/licenca/*) e o painel (/admin).
+    // Sem o banco LICENCAS configurado, essas rotas respondem 503 e o resto do site segue no ar.
+    const lic = await rotearLicencas(request, env, url, paginaAdmin);
+    if (lic) return lic;
 
     // Qualquer outra coisa que não bateu com um arquivo estático volta para a
     // camada de assets, que aplica o tratamento de 404 configurado.

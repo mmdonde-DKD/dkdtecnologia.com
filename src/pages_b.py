@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Preços, segurança, sobre, contato, legal e a prévia da área logada."""
 
-from shell import APP, EMAIL, EMAIL_DPO, RAZAO, CNPJ, CIDADE, AVISO_CVM, formulario, whats_link
+from shell import APP, EMAIL, EMAIL_DPO, RAZAO, CNPJ, CIDADE, AVISO_CVM, formulario, whats_link, turnstile, DOWNLOAD_GESTAO
 
 # ------------------------------------------------------------------ PREÇOS
 # Preços aprovados para publicação (decisão de 09/09/2026).
@@ -62,9 +62,11 @@ PRECOS = """
       <div class="plan">
         <span class="chip">Planejamento e Gestão Financeira · CPF e CNPJ</span>
         <div class="price">R$ 149</div><div class="per">por mês · 1 CNPJ e 1 CPF</div>
-        <ul><li>Extratos e faturas ilimitados</li><li>Classificação com regras próprias</li><li>Projeção de 30, 60 e 90 dias</li><li>Pacote para o contador</li></ul>
-        <p class="tiny" style="margin-top:12px">Completo, até 3 CNPJs: R$ 279/mês. Versão para escritório, até 20 clientes: R$ 690/mês.</p>
-        <div class="foot"><a class="btn btn--sm" href="/contato/">Contratar</a></div>
+        <ul><li>Extratos e faturas ilimitados</li><li>Classificação com regras próprias</li><li>Fluxo de caixa previsto, orçado e realizado</li><li>Investimentos, pendências e relatório do mês</li></ul>
+        <p class="tiny" style="margin-top:12px">Completo, até 3 CNPJs: R$ 279/mês. Versão para escritório, até 20 clientes: R$ 690/mês.
+        Roda no seu computador: os extratos não passam pelos servidores da DKD.</p>
+        <div class="foot"><a class="btn btn--sm btn--solid" href="/cadastro/" data-lead="precos-teste">Testar 30 dias grátis</a>
+        <a class="btn btn--sm" href="/contato/" style="margin-left:6px">Contratar</a></div>
       </div>
       <div class="plan">
         <span class="chip">Alpha Invest AI</span>
@@ -404,6 +406,192 @@ CONTATO = f"""
 </section>
 """
 
+# ---------------------------------------------------------------- CADASTRO
+# Teste grátis do módulo de Gestão Financeira (V10.1_web, versão para download).
+# O formulário vai para /api/cadastro (worker/licencas.js): cria o cliente com 30
+# dias de avaliação, contados da primeira ativação, e manda o link de download.
+# O mesmo e-mail é o que o portal usa para receber o código de ativação.
+UFS = ("AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO").split()
+
+CADASTRO = f"""
+<section class="band band--hero band--surface">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">Teste grátis · 30 dias completos · sem cartão</p>
+      <h1>O controle financeiro da empresa e do dono, no seu computador.</h1>
+      <p class="lead" style="margin-top:18px">Faça o cadastro, baixe o portal e ative com o código que chega no seu e-mail.
+      São <strong>30 dias completos</strong>, contados da ativação, com tudo liberado.
+      Os extratos e os números ficam no seu computador — não passam pelos servidores da DKD.</p>
+      <div class="btn-row">
+        <a class="btn btn--solid" href="#cadastro" data-lead="cadastro-topo">Fazer o cadastro</a>
+        <a class="btn btn--quiet" href="/produtos/gestao-financeira/">Conhecer o módulo</a>
+      </div>
+    </div>
+    <div class="card card--pad">
+      <p class="eyebrow eyebrow--mute">Como funciona</p>
+      <ol class="passos">
+        <li><strong>Cadastro</strong> — leva um minuto. O link de download chega no e-mail que você informar.</li>
+        <li><strong>Download</strong> — um arquivo só, sem instalação. Abra no Google Chrome ou no Microsoft Edge.</li>
+        <li><strong>Ativação</strong> — informe o mesmo e-mail na tela do portal e digite o código de 6 números que mandamos para ele.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <p class="eyebrow">O que vem no portal</p>
+    <h2>Do extrato bruto ao fechamento do mês</h2>
+    <div class="grid g2" style="margin-top:26px">
+      <ul class="ticks" style="margin:0">
+        <li>Extratos em PDF do Bradesco, Banco do Brasil, Itaú e Safra, faturas de cartão do Bradesco e do Banco do Brasil,
+        e planilhas XLSX, XLS e CSV de qualquer banco</li>
+        <li>Pessoa física e pessoa jurídica no mesmo painel, com os planos de contas PF e PJ prontos para usar</li>
+        <li>Classificação que aprende: você corrige uma vez e a regra vale para os próximos extratos</li>
+      </ul>
+      <ul class="ticks" style="margin:0">
+        <li>Fluxo de caixa previsto, orçado e realizado, mês a mês</li>
+        <li>Investimentos por produto, com a rentabilidade medida e a comparação com o CDI</li>
+        <li>Pendências e auditoria do fechamento: lançamento sem categoria, saldo que não bate com o extrato,
+        transferência sem contrapartida, extrato importado em dobro — e relatórios em XLSX e PDF</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="band band--surface" id="cadastro">
+  <div class="container">
+    <div class="hero-grid" style="align-items:start">
+      <div>
+        <p class="eyebrow">Cadastro</p>
+        <h2>Leva um minuto.</h2>
+        <p class="sec-intro">Use um e-mail que você abre no dia a dia: é para ele que vão o link de download
+        e o código de ativação do portal.</p>
+
+        <form class="form" method="POST" action="/api/cadastro" data-lead-form="cadastro" data-cadastro>
+          <input type="hidden" name="origem" value="site-cadastro">
+          <input type="hidden" name="referrer" value="" data-referrer>
+
+          <fieldset class="escolha">
+            <legend>O portal vai ser usado por</legend>
+            <label><input type="radio" name="tipo" value="PJ" checked> Empresa <small>CNPJ</small></label>
+            <label><input type="radio" name="tipo" value="PF"> Pessoa física <small>CPF</small></label>
+          </fieldset>
+
+          <div class="two">
+            <div class="field"><label for="cad-nome">Seu nome</label>
+              <input id="cad-nome" name="nome" required minlength="3" maxlength="120" autocomplete="name"></div>
+            <div class="field"><label for="cad-mail">E-mail</label>
+              <input id="cad-mail" name="email" type="email" required maxlength="160" autocomplete="email"></div>
+          </div>
+
+          <div class="field" data-so-pj><label for="cad-emp">Razão social</label>
+            <input id="cad-emp" name="empresa" required minlength="3" maxlength="160" autocomplete="organization">
+            <p class="ajuda">É o nome que aparece no selo da licença, no topo do portal.</p></div>
+
+          <div class="two">
+            <div class="field"><label for="cad-doc" data-rotulo-doc>CNPJ</label>
+              <input id="cad-doc" name="documento" required autocomplete="off" spellcheck="false"
+                     autocapitalize="characters" maxlength="18" placeholder="00.000.000/0000-00">
+              <p class="ajuda" data-ajuda-doc>Aceita o CNPJ numérico e o novo CNPJ com letras.</p></div>
+            <div class="field"><label for="cad-tel">Telefone ou WhatsApp</label>
+              <input id="cad-tel" name="telefone" type="tel" maxlength="20" autocomplete="tel" placeholder="(54) 99999-0000"></div>
+          </div>
+
+          <div class="two">
+            <div class="field"><label for="cad-cid">Cidade</label>
+              <input id="cad-cid" name="cidade" maxlength="80" autocomplete="address-level2"></div>
+            <div class="field"><label for="cad-uf">UF</label>
+              <select id="cad-uf" name="uf"><option value="">—</option>{"".join(f'<option>{u}</option>' for u in UFS)}</select></div>
+          </div>
+
+          <div aria-hidden="true" style="position:absolute;left:-9999px">
+            <label for="hp-cadastro">Não preencha</label>
+            <input id="hp-cadastro" name="website" tabindex="-1" autocomplete="off"></div>
+          {turnstile()}
+
+          <div class="field aceite">
+            <input id="cad-ok" name="aceite" value="1" type="checkbox" required>
+            <label for="cad-ok">Li e aceito os <a href="/legal/termos/" target="_blank" rel="noopener">Termos de Uso</a>
+            e a <a href="/legal/privacidade/" target="_blank" rel="noopener">Política de Privacidade</a>.
+            Os dados acima servem para emitir a licença, enviar o código de ativação e falar com você sobre ela.</label>
+          </div>
+          <div><button class="btn btn--solid" type="submit" data-enviar>Criar o cadastro e receber o link</button></div>
+        </form>
+        <div class="aviso-form" data-aviso="cadastro" hidden></div>
+
+        <div class="card card--pad cad-ok" data-cadastro-ok hidden>
+          <p class="eyebrow">Cadastro recebido</p>
+          <h3 style="margin-top:6px">Confira o seu e-mail.</h3>
+          <p class="small">Mandamos o link de download e as instruções para o e-mail informado.
+          Se ele já tinha cadastro, reenviamos as mesmas instruções. O download também está aqui:</p>
+          <div class="btn-row" style="margin:16px 0 18px">
+            <a class="btn btn--solid" href="{DOWNLOAD_GESTAO}" download data-lead="download-portal">Baixar o portal</a>
+          </div>
+          <ol class="passos">
+            <li>Descompacte o arquivo baixado e abra o portal — o arquivo <strong>.html</strong> — no Chrome ou no Edge.</li>
+            <li>Na tela de ativação, informe o <strong>e-mail do cadastro</strong>.</li>
+            <li>Digite o <strong>código de 6 números</strong> que chega nele. Pronto: 30 dias completos.</li>
+          </ol>
+          <p class="tiny" style="margin:4px 0 0">Não chegou em 5 minutos? Veja a caixa de spam ou de promoções,
+          ou escreva para <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="note note--brand">
+          <span class="tag">Os seus dados ficam com você</span>
+          <p class="small">O portal roda no seu computador. Os extratos, os lançamentos e os saldos ficam nele —
+          <strong>não passam pelos servidores da DKD</strong>.</p>
+          <p class="small" style="margin-bottom:0">A internet só entra para ativar e renovar a licença e para buscar a
+          taxa CDI pública no Banco Central. Do cadastro, a DKD guarda só o necessário para emitir e controlar a licença.</p>
+        </div>
+        <div class="card card--pad" style="margin-bottom:18px">
+          <p class="eyebrow eyebrow--mute">O que você precisa</p>
+          <ul class="plain small" style="margin-bottom:0">
+            <li>Computador com Windows, macOS ou Linux</li>
+            <li>Google Chrome ou Microsoft Edge atualizado</li>
+            <li>Internet na ativação; depois, o portal abre sem conexão</li>
+            <li>Uma licença vale para até 2 computadores</li>
+          </ul>
+        </div>
+        <div class="card card--pad">
+          <p class="eyebrow eyebrow--mute">Depois dos 30 dias</p>
+          <p class="small">O portal entra em somente-consulta: continua abrindo, mostrando, exportando e fazendo backup —
+          só não aceita dado novo. <strong>Nada do que você lançou se perde.</strong></p>
+          <p class="small" style="margin-bottom:0">Contratando, a licença se renova sozinha na próxima abertura com internet,
+          sem reinstalar. Planos a partir de R$ 149 por mês — <a href="/precos/">ver os preços</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <h2>Perguntas antes de baixar</h2>
+    <div style="margin-top:24px;border-top:1px solid var(--line)">
+      <details><summary>Preciso de cartão de crédito para testar?</summary><div class="ans">Não. O teste é gratuito e
+      não pede forma de pagamento. Ao fim dos 30 dias, você decide se contrata.</div></details>
+      <details><summary>Quando os 30 dias começam a contar?</summary><div class="ans">Na primeira ativação do portal,
+      não no cadastro. Se você se cadastrar hoje e ativar na semana que vem, os 30 dias começam na semana que vem.</div></details>
+      <details><summary>Por que vocês pedem CPF ou CNPJ?</summary><div class="ans">Porque a licença sai em nome de alguém:
+      o nome e o documento aparecem no selo do portal, e é por eles que a DKD identifica a licença no suporte e na
+      contratação. Para pessoa física, o portal mostra o CPF mascarado.</div></details>
+      <details><summary>Os meus extratos vão para a DKD?</summary><div class="ans">Não. O portal lê os extratos no seu
+      computador e guarda tudo no navegador e no arquivo-base que você escolher. A DKD recebe só o que a licença precisa:
+      o e-mail da ativação e um identificador do computador, gerado pelo próprio portal.</div></details>
+      <details><summary>Posso usar em mais de um computador?</summary><div class="ans">Sim, em até dois por licença.
+      Em cada um, a ativação é a mesma: o e-mail do cadastro e o código. Para trocar de computador, peça à DKD para
+      liberar o antigo.</div></details>
+      <details><summary>O código não chegou. E agora?</summary><div class="ans">Confira a caixa de spam e de promoções e
+      se o e-mail digitado no portal é o mesmo do cadastro. O código vale por 15 minutos; o portal deixa pedir outro
+      depois de um minuto. Se continuar sem chegar, escreva para <a href="mailto:{EMAIL}">{EMAIL}</a>.</div></details>
+    </div>
+  </div>
+</section>
+"""
+
 # ------------------------------------------------------------------- LEGAL
 MINUTA = """<div class="todo"><b>Minuta</b> — texto-base preparado para revisão do advogado da DKD.
 Não publique como definitivo sem essa revisão. Remova este aviso quando o documento estiver aprovado.</div>"""
@@ -426,6 +614,9 @@ PRIVACIDADE = f"""
     <p>A DKD é <strong>controladora</strong> dos dados de quem visita o site e de quem usa a plataforma: cadastro, credenciais, registros de acesso e dados de faturamento.
     A DKD é <strong>operadora</strong> dos dados que o cliente carrega na plataforma sobre terceiros — arquivos fiscais, extratos e cadastros — tratando-os por conta e ordem do cliente,
     que é o controlador desses dados.</p>
+    <p>No módulo de Gestão Financeira na versão para download, o portal roda no computador do cliente: extratos, lançamentos e saldos
+    ficam nesse computador e <strong>não são enviados à DKD</strong>. O portal só se conecta à internet para ativar e renovar a licença
+    e para consultar a taxa CDI pública no Banco Central.</p>
 
     <h2>3. Dados coletados e finalidade</h2>
     <div class="tablewrap" style="margin:18px 0 24px">
@@ -435,6 +626,7 @@ PRIVACIDADE = f"""
           <tr><th scope="row">Nome, e-mail, telefone e empresa</th><td>Responder contato, executar e administrar o contrato</td><td>Execução de contrato e procedimentos preliminares</td></tr>
           <tr><th scope="row">Credenciais e registros de acesso</th><td>Autenticar, controlar permissões e manter trilha de auditoria</td><td>Cumprimento de obrigação legal e legítimo interesse em segurança</td></tr>
           <tr><th scope="row">Dados de faturamento</th><td>Cobrar e emitir documento fiscal</td><td>Execução de contrato e obrigação legal</td></tr>
+          <tr><th scope="row">Cadastro do teste e licença do portal para download — nome, e-mail, CPF ou CNPJ, razão social, telefone, cidade, identificador gerado pelo portal para cada computador ativado e registro das ativações</th><td>Emitir, ativar, renovar e controlar a licença; enviar o código de ativação e os avisos da licença</td><td>Execução de contrato e procedimentos preliminares</td></tr>
           <tr><th scope="row">Arquivos carregados pelo cliente</th><td>Executar a análise contratada</td><td>Execução de contrato, na qualidade de operadora</td></tr>
           <tr><th scope="row">Dados de navegação essenciais</th><td>Manter a sessão e a segurança do site</td><td>Legítimo interesse</td></tr>
         </tbody>

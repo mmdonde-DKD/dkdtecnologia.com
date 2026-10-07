@@ -11,5 +11,9 @@
 /app-preview/*
   X-Robots-Tag: noindex, nofollow
 
+/downloads/*
+  Cache-Control: no-cache
+  X-Robots-Tag: noindex, nofollow
+
 /assets/*
   Cache-Control: public, max-age=31536000, immutable

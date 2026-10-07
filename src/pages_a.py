@@ -488,11 +488,11 @@ GESTAO = """
       Você sobe os extratos da pessoa física e da jurídica, a ferramenta classifica, separa o que é retirada do que é despesa da empresa,
       e mostra o caixa dos próximos noventa dias com o que já está contratado.</p>
       <div class="btn-row">
-        <a class="btn btn--solid" href="/contato/">Falar com a DKD</a>
+        <a class="btn btn--solid" href="/cadastro/" data-lead="gestao-teste">Testar 30 dias grátis</a>
         <a class="btn btn--portal" href="__PORTAL_GESTAO__" target="_blank" rel="noopener">Abrir o portal<span aria-hidden="true">&#8599;</span></a>
         <a class="btn btn--quiet" href="/precos/">Ver preços</a>
-      
       </div>
+      <p class="tiny" style="margin-top:14px">Teste completo no seu computador, sem cartão. Os extratos não passam pelos servidores da DKD.</p>
     </div>
     <div class="card card--pad">
       <p class="eyebrow eyebrow--mute">O sintoma</p>
@@ -511,7 +511,8 @@ GESTAO = """
     <div class="grid g2" style="margin-top:28px">
       <div>
         <h3>Leitura dos extratos</h3>
-        <p class="small">Extratos e faturas de cartão em OFX, CSV ou PDF, de contas de pessoa física e de pessoa jurídica, no mesmo painel.
+        <p class="small">Extratos em PDF do Bradesco, Banco do Brasil, Itaú e Safra, faturas de cartão do Bradesco e do Banco do Brasil,
+        e planilhas XLSX, XLS e CSV de qualquer banco — contas de pessoa física e de pessoa jurídica no mesmo painel.
         Lançamentos duplicados e transferências entre contas próprias são identificados e não contam duas vezes.</p>
       </div>
       <div>
@@ -525,19 +526,19 @@ GESTAO = """
         O resultado da empresa aparece limpo, e o quanto o dono retirou aparece explícito.</p>
       </div>
       <div>
-        <h3>Projeção de caixa de 30, 60 e 90 dias</h3>
-        <p class="small">A partir do que já está contratado: recebíveis, parcelamentos, folha, tributos recorrentes e assinaturas.
-        Com faixa de variação, para você saber o quanto a projeção pode errar.</p>
+        <h3>Fluxo de caixa previsto, orçado e realizado</h3>
+        <p class="small">O orçamento do ano por categoria, a projeção dos meses à frente e o realizado lado a lado, mês a mês —
+        para ver cedo o mês em que o caixa aperta, e o quanto o realizado se afastou do que foi planejado.</p>
       </div>
       <div>
-        <h3>Alertas antes do aperto</h3>
-        <p class="small">Saldo projetado abaixo do mínimo que você definiu, concentração de vencimentos numa mesma semana,
-        despesa recorrente que subiu acima do normal e cobrança que continua saindo de serviço que você não usa mais.</p>
+        <h3>Pendências e auditoria do fechamento</h3>
+        <p class="small">Lançamento sem categoria vai para a fila de pendências. Saldo que não bate com o extrato, transferência
+        sem a contrapartida e extrato importado em dobro aparecem na auditoria do mês, critério por critério — antes de o número ir para alguém.</p>
       </div>
       <div>
-        <h3>Pacote para o contador</h3>
-        <p class="small">Exportação organizada do período, com os lançamentos classificados, os documentos anexados e um resumo em linguagem clara —
-        o que encurta a conversa de fechamento de mês.</p>
+        <h3>Investimentos e relatório do mês</h3>
+        <p class="small">A carteira por produto, com a rentabilidade medida e a comparação com o CDI; e o relatório gerencial
+        do mês em XLSX e PDF, com os lançamentos classificados por titular, banco e categoria — o que encurta a conversa de fechamento.</p>
       </div>
     </div>
     <div class="note" style="margin-top:32px">
@@ -556,7 +557,7 @@ GESTAO = """
       <div><h3>Profissional autônomo com CNPJ</h3><p class="small">Médico, advogado, engenheiro, consultor — quem emite nota pela empresa e vive do que retira dela.</p></div>
       <div><h3>Escritório que atende esse perfil</h3><p class="small">O contador usa como camada de organização antes do fechamento e devolve ao cliente um painel que ele entende sozinho.</p></div>
     </div>
-    <div class="btn-row"><a class="btn btn--solid" href="/precos/">Ver preços</a><a class="btn btn--quiet" href="/contato/">Falar com a DKD</a></div>
+    <div class="btn-row"><a class="btn btn--solid" href="/cadastro/" data-lead="gestao-teste-rodape">Testar 30 dias grátis</a><a class="btn" href="/precos/">Ver preços</a><a class="btn btn--quiet" href="/contato/">Falar com a DKD</a></div>
   </div>
 </section>
 """

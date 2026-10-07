@@ -8,16 +8,46 @@
 
   "compatibility_date": "2026-09-09",
 
-  // O Worker só entra em ação quando nenhum arquivo estático corresponde à
-  // URL — na prática, apenas em /api/contato. Todo o resto do site é servido
-  // direto dos assets, sem passar por código.
+  // O Worker só entra em ação nas rotas de "run_worker_first" e quando nenhum
+  // arquivo estático corresponde à URL. Todo o resto do site é servido direto
+  // dos assets, sem passar por código.
   "main": "worker/index.js",
 
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Formulários (POST) e o painel /admin precisam chegar ao Worker ANTES da
+    // camada de assets: sem isto, o navegador recebe 405 ao enviar o formulário
+    // de contato ou de cadastro, e a página 404 no lugar do /admin — a camada
+    // de assets atende primeiro as navegações e só aceita GET.
+    "run_worker_first": ["/api/*", "/admin", "/admin/*"]
   },
+
+  // Mantém as variáveis criadas no painel (Settings > Variables and Secrets)
+  // a cada deploy. Os segredos (tipo Secret) nunca são apagados pelo deploy.
+  "keep_vars": true,
+
+  // ------------------------------------------------------------------
+  // V10.1_web — banco de licenças do DKD Financial Tools AI (Cloudflare D1)
+  //
+  // 1. Crie o banco:  painel Cloudflare > Storage & Databases > D1 > Create
+  //    nome: dkd-licencas   (ou: npx wrangler d1 create dkd-licencas)
+  // 2. Aplique a estrutura: D1 > dkd-licencas > Console > cole worker/schema.sql
+  // 3. Tire as barras "//" das 3 linhas abaixo e cole o database_id do banco.
+  //
+  // Enquanto este bloco estiver comentado, o cadastro e a ativação respondem
+  // "em manutenção" e o resto do site segue no ar normalmente. Não descomente
+  // com o id de exemplo: o deploy falha se o banco não existir.
+  //
+  // "d1_databases": [
+  //   { "binding": "LICENCAS", "database_name": "dkd-licencas", "database_id": "COLE-AQUI-O-DATABASE-ID" }
+  // ],
+  //
+  // Opcional — envio de e-mail pelo próprio Cloudflare (Email Service), no
+  // lugar do Resend. Exige o domínio habilitado em Email > Email Sending.
+  // "send_email": [ { "name": "EMAIL" } ],
+  // ------------------------------------------------------------------
 
   "observability": { "enabled": true }
 }

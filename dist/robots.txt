@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /app-preview/
+Disallow: /downloads/
+Disallow: /admin
 
 Sitemap: https://dkdtecnologia.com/sitemap.xml

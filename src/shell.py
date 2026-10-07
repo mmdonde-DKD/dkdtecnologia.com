@@ -30,6 +30,12 @@ TURNSTILE_SITEKEY = ""
 
 SUITE = "DKD Financial Tools AI"
 
+# Download do módulo de Gestão Financeira (versão para o computador do cliente).
+# Endereço fixo: a cada versão nova troca-se o zip em downloads/, e os links dos
+# e-mails de boas-vindas já enviados continuam levando à versão mais recente.
+# O build só publica o zip se ele vier carimbado com a chave de PRODUÇÃO.
+DOWNLOAD_GESTAO = "/downloads/DKD_Financial_Tools_AI_Gestao_Financeira.zip"
+
 # ------------------------------------------------------------------ módulos
 # chave: (nome curto, nome completo, cor/tema, rota, resumo de uma linha, linha do cabeçalho)
 MODULOS = {
@@ -133,6 +139,7 @@ def turnstile_script() -> str:
 
 # rota → chave do módulo, para colorir a página e nomear o cabeçalho
 ROTA_MOD = {m[3]: k for k, m in MODULOS.items()}
+ROTA_MOD["/cadastro/"] = "gestao"     # o teste grátis é do módulo de Gestão Financeira
 
 NAV = [
     ("Módulos", "/produtos/"),
@@ -211,6 +218,7 @@ def footer(spa: bool = False) -> str:
           <li><a href="{href('/seguranca/')}">Segurança e LGPD</a></li>
           <li><a href="{href('/precos/')}">Preços</a></li>
           <li><a href="{href('/diagnostico/')}">Diagnóstico gratuito</a></li>
+          <li><a href="{href('/cadastro/')}">Teste grátis — Gestão Financeira</a></li>
           <li><a href="{href('/contato/')}">Contato</a></li>
         </ul>
       </div>

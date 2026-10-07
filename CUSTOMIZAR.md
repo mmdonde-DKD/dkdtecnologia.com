@@ -87,6 +87,7 @@ explicitamente, então ele se comporta igual em qualquer navegador.
 | 4.5 | Hub dos quatro | `PRODUTOS` |
 | 4.6 | **Portais** (vitrine das ferramentas) | `PORTAIS_PAGE` |
 | 4.7 | **Diagnóstico gratuito** | `DIAGNOSTICO` |
+| 4.9 | **Cadastro — teste grátis de 30 dias** (Gestão Financeira, versão para download) | `CADASTRO` em `src/pages_b.py` |
 | 4.8 | Aviso da CVM nas páginas de investimento | `DISCLAIMER_CVM` — mantenha |
 
 ---
@@ -128,6 +129,21 @@ explicitamente, então ele se comporta igual em qualquer navegador.
 | 7.5 | Cabeçalhos de segurança e CSP — `_headers` |
 | 7.6 | Envio do formulário — `functions/api/contato.js` |
 | 7.7 | Prévia de arquivo único — usa `assets/fonts-embed.css` |
+
+---
+
+## 7-A · Cadastro, download e licenças — desde a V10.1_web (05/10/2026)
+
+| # | O quê | Onde |
+|---|---|---|
+| 7A.1 | Texto, perguntas e campos da página `/cadastro/` | `src/pages_b.py`, `CADASTRO` |
+| 7A.2 | Endereço do zip do portal (fixo entre versões) | `src/shell.py`, `DOWNLOAD_GESTAO` |
+| 7A.3 | O zip em si — só entra no ar se for build de **produção** | pasta `downloads/` (o build barra a de teste) |
+| 7A.4 | Máscara de CPF/CNPJ (inclusive CNPJ com letras) e mensagens de erro do cadastro | `src/theme.py`, bloco `cadastro do teste grátis` do `JS` |
+| 7A.5 | Botões "Testar 30 dias grátis" | `GESTAO` (`pages_a.py`) e plano de Gestão em `PRECOS` |
+| 7A.6 | Regras do servidor: dias de avaliação, limite de computadores, e-mails | `worker/licencas.js` (variáveis `AVALIACAO_DIAS`, `LIMITE_DISPOSITIVOS`) |
+| 7A.7 | Banco de licenças | `worker/schema.sql` + bloco `d1_databases` do `wrangler.jsonc` |
+| 7A.8 | Painel da DKD (clientes, prazos, computadores, chaves) | `/admin` — `worker/admin.js` |
 
 ---
 
