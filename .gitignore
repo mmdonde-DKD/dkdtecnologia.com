@@ -27,3 +27,6 @@ ferramentas/*.css
 
 # dependências do npm (Workers Builds instala sozinho)
 node_modules/
+
+# Autenticador DKD — uso interno, NUNCA publicar (token, chave privada, cadastro)
+_AUTENTICADOR_DKD/
