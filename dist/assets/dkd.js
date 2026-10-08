@@ -201,3 +201,16 @@
     history.replaceState(null, '', location.pathname + location.hash);
   }
 })();
+
+// Galeria de telas (/portais/): miniatura troca a tela principal.
+(function(){
+  document.querySelectorAll('.tela').forEach(function(t){
+    var img=t.querySelector('[data-tela-principal]'), link=t.querySelector('[data-tela-link]'), leg=t.querySelector('[data-tela-leg]');
+    t.querySelectorAll('.tela-min').forEach(function(b){
+      b.addEventListener('click',function(){
+        img.src=b.getAttribute('data-src'); link.href=b.getAttribute('data-src'); leg.textContent=b.getAttribute('data-leg');
+        t.querySelectorAll('.tela-min').forEach(function(x){x.classList.toggle('on',x===b)});
+      });
+    });
+  });
+})();

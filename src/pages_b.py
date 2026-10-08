@@ -446,7 +446,7 @@ CADASTRO = f"""
       <ul class="ticks" style="margin:0">
         <li>Extratos em PDF do Bradesco, Banco do Brasil, Itaú e Safra, faturas de cartão do Bradesco e do Banco do Brasil,
         e planilhas XLSX, XLS e CSV de qualquer banco</li>
-        <li>Pessoa física e pessoa jurídica no mesmo painel, com os planos de contas PF e PJ prontos para usar</li>
+        <li>Pessoa física e pessoa jurídica no mesmo painel, cada uma com o plano de contas que você monta — os seus grupos e as suas categorias</li>
         <li>Classificação que aprende: você corrige uma vez e a regra vale para os próximos extratos</li>
       </ul>
       <ul class="ticks" style="margin:0">
@@ -803,25 +803,32 @@ APP_HUB = f"""
 
 
 # ---------------------------------------------------------------- PORTAIS
-def _tela(chave, nome, papel, resumo, itens, legenda):
+def _tela(chave, nome, papel, resumo, itens, telas):
+    """Um módulo na galeria: tela principal grande + miniaturas que trocam a principal.
+    `telas` = [(arquivo, título da tela, legenda), ...] — imagens em /assets/demo/."""
     lis = "".join("<li>%s</li>" % i for i in itens)
+    arq0, tit0, leg0 = telas[0]
+    mins = "".join(
+        f'''<button type="button" class="tela-min{' on' if n == 0 else ''}" data-src="/assets/demo/{a}" data-leg="{t} — {l}" aria-label="Ver a tela: {t}">
+            <img src="/assets/demo/{a}" width="1440" height="900" loading="lazy" alt=""><span>{t}</span></button>'''
+        for n, (a, t, l) in enumerate(telas))
     return f"""
     <article class="tela mod mod--{chave}" id="tela-{chave}">
       <figure class="tela-img">
-        <a href="/assets/demo/tela-{chave}.webp" target="_blank" rel="noopener" title="Abrir a tela em tamanho real">
-          <img src="/assets/demo/tela-{chave}.webp" width="1440" height="900" loading="lazy"
+        <a href="/assets/demo/{arq0}" target="_blank" rel="noopener" title="Abrir a tela em tamanho real" data-tela-link>
+          <img src="/assets/demo/{arq0}" width="1440" height="900" loading="lazy" data-tela-principal
                alt="Tela de demonstração do módulo {nome}, com dados fictícios"></a>
-        <figcaption class="tiny">{legenda}</figcaption>
+        <figcaption class="tiny" data-tela-leg>{tit0} — {leg0}</figcaption>
+        <div class="tela-mins">{mins}</div>
       </figure>
       <div class="tela-txt">
-        <span class="chip">Tela de exemplo · dados fictícios</span>
+        <span class="chip">{len(telas)} telas de exemplo · dados fictícios</span>
         <h3>{nome}</h3>
         <p class="tagline small">{papel}</p>
         <p class="small">{resumo}</p>
         <ul class="ticks small">{lis}</ul>
         <div class="btn-row">
           <a class="btn btn--solid btn--sm" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-tela-{chave}">Pedir uma demonstração</a>
-          <a class="btn btn--quiet btn--sm" href="/produtos/">Ver o módulo</a>
         </div>
       </div>
     </article>"""
@@ -832,38 +839,70 @@ PORTAIS_PAGE = f"""
   <div class="container">
     <p class="eyebrow">Portais · telas de exemplo</p>
     <h1>Veja como é por dentro — antes de falar com a gente.</h1>
-    <p class="lead" style="margin-top:18px">Uma tela real de cada módulo do DKD Financial Tools AI, preenchida com
-    <strong>dados fictícios</strong>. As ferramentas completas são liberadas para clientes e para demonstrações
-    acompanhadas, com acesso individual por e-mail.</p>
+    <p class="lead" style="margin-top:18px">Telas reais dos portais do DKD Financial Tools AI, preenchidas com
+    <strong>dados fictícios</strong>. Clique nas miniaturas para trocar a tela e na imagem para vê-la em tamanho real.
+    As ferramentas completas são liberadas para clientes e para demonstrações acompanhadas, com acesso individual por e-mail.</p>
     <div class="btn-row">
       <a class="btn btn--solid" href="__WHATSAPP__" target="_blank" rel="noopener" data-lead="whatsapp-portais">Pedir uma demonstração</a>
       <a class="btn btn--quiet" href="{APP}">Já sou cliente — entrar</a>
     </div>
+    <p class="small" style="margin-top:18px">Ir para:
+      <a href="#tela-gestao">Gestão Financeira</a> ·
+      <a href="#tela-fiscal">Fiscal e Tributária</a> ·
+      <a href="#tela-integrado">Portal Integrado</a> ·
+      <a href="#tela-alpha">Alpha Invest AI</a> ·
+      <a href="#tela-asset">Asset Intelligence AI</a></p>
   </div>
 </section>
 
 <section class="band">
   <div class="container telas">
+{_tela("gestao", "Planejamento, Controle e Gestão Financeira",
+       "Para o dono do negócio e para a família",
+       "Empresa e sócio no mesmo painel: patrimônio consolidado, o mês projetado contra o realizado, o fluxo de caixa e os investimentos.",
+       ["Posição consolidada de todas as contas e titulares", "Projetado × realizado por grupo e por conta", "Fluxo de caixa mensal e evolução do patrimônio", "Base criptografada, com PIN e senha mestra"],
+       [("gestao-1.webp", "Posição consolidada", "patrimônio, saldos e resultado do mês de uma empresa e de um sócio fictícios"),
+        ("gestao-2.webp", "Fluxo mensal e despesas por categoria", "gráficos do dashboard consolidado"),
+        ("gestao-3.webp", "Dashboard mensal", "projetado × realizado por grupo de contas"),
+        ("gestao-4.webp", "Relatório por categoria", "realizado mês a mês, com exportação para Excel e PDF"),
+        ("gestao-5.webp", "Fluxo de caixa", "projetado × realizado de cada conta ao longo do ano"),
+        ("gestao-6.webp", "Investimentos", "posição, rentabilidade e conciliação com os saldos")])}
 {_tela("fiscal", "Análise, Simulação e Inteligência Fiscal e Tributária",
        "Para o escritório de contabilidade",
-       "Comparação de regimes sobre os dados reais do CNPJ, com a carga mensal e anual de cada um e o destino de cada tributo na reforma.",
-       ["Simples, Presumido e Real lado a lado", "Decomposição da carga por tributo e esfera", "Destino de cada tributo na transição para IBS e CBS"],
-       "Análise tributária e enquadramento de uma empresa fictícia do Simples Nacional.")}
-{_tela("gestao", "Planejamento, Controle e Gestão Financeira",
-       "Para o dono do negócio",
-       "O mês da pessoa física e da jurídica no mesmo painel: o que foi projetado, o que foi realizado e a diferença em cada conta.",
-       ["Extratos PF e PJ classificados automaticamente", "Projetado × realizado por grupo de contas", "Base criptografada, com PIN e senha mestra"],
-       "Dashboard mensal de uma empresa e de um sócio fictícios.")}
+       "Comparação de regimes sobre os dados reais do CNPJ, análise fiscal de cada nota e o plano de ação para a reforma tributária.",
+       ["Simples, Presumido e Real lado a lado", "Classificação fiscal item a item da NF-e", "Crédito de IBS e CBS de fornecedores e clientes", "Simulador com plano de ação priorizado"],
+       [("fiscal-1.webp", "Análise tributária", "comparativo de regimes e decomposição da carga de uma empresa fictícia"),
+        ("fiscal-2.webp", "Análise fiscal do documento", "classificação de cada item da nota fiscal"),
+        ("fiscal-3.webp", "NF do mês — fornecedores", "crédito de IBS e CBS das notas de entrada"),
+        ("fiscal-4.webp", "NF do mês — clientes", "crédito transferido aos clientes nas notas de saída"),
+        ("fiscal-5.webp", "Simulador F&T", "cenários de 2027 e plano de ação com prazos")])}
+{_tela("integrado", "Portal Integrado e Investors Profile",
+       "A porta de entrada dos módulos de investimento",
+       "Um acesso só para Alpha Invest e Asset Intelligence, com o perfil do investidor (Res. CVM 30/2021) definindo o que cada pessoa pode usar.",
+       ["Perfil do investidor com validade e histórico", "Módulos liberados por perfil de risco e nível de acesso", "LGPD: consentimento, sessões e trilha de auditoria"],
+       [("integrado-1.webp", "Hub de módulos", "titular, perfil, nível de acesso e módulos liberados"),
+        ("integrado-2.webp", "Módulos por portal", "Alpha Invest, Asset Intelligence e Investors Profile"),
+        ("integrado-3.webp", "Perfil do investidor", "apuração do perfil por questionário de adequação"),
+        ("integrado-4.webp", "Habilitação de acesso", "o que fica liberado para cada perfil"),
+        ("integrado-5.webp", "Classes de ativo", "perfil mínimo e observação de risco por classe")])}
 {_tela("alpha", "Alpha Invest AI",
        "Para o investidor pessoa física",
-       "Triagem e comparação de fundos e ativos pelos critérios que você define, com a fonte de cada número.",
-       ["Filtros por classe, tipo, isenção e indicadores", "Comparação de preço, variação, DY e P/VP", "Ferramenta operada por você — não recomenda ativo"],
-       "Ranking de fundos fictícios (tickers EXMP e DEMO não existem na B3).")}
+       "Triagem e comparação de fundos e ativos pelos critérios que você define, carteira teórica, projeções e comparação com benchmarks.",
+       ["Ranking por DY, P/VP, liquidez e score composto", "Carteira teórica e otimização por restrições", "Projeção de 12 meses com vários modelos", "Ferramenta operada por você — não recomenda ativo"],
+       [("alpha-1.webp", "Ranking de FII", "fundos e tickers fictícios (EXxx não existem na B3)"),
+        ("alpha-2.webp", "Carteira teórica", "posições, rendimentos e resultado de uma carteira de exemplo"),
+        ("alpha-3.webp", "Comparar", "evolução de fundos fictícios contra CDI e Ibovespa"),
+        ("alpha-4.webp", "Projeção 12 meses", "histórico e projeção por modelo, com backtest"),
+        ("alpha-5.webp", "Otimizar", "alocação sugerida pelos parâmetros que o usuário define")])}
 {_tela("asset", "Asset Intelligence AI",
        "Para quem já tem carteira montada",
-       "A carteira teórica que você montou, com rentabilidade, valor financeiro e o efeito dos proventos posição a posição.",
-       ["Rentabilidade com e sem proventos", "Valor inicial, atual e resultado por posição", "Ferramenta operada por você — não recomenda ativo"],
-       "Carteira teórica com empresas e tickers fictícios.")}
+       "Carteira teórica de ações e opções, cadeia de opções, operações estruturadas e backtesting — tudo sobre ativos que você informa.",
+       ["Rentabilidade com e sem proventos por posição", "Cadeia de opções com gregas e termômetro", "Collar, put protetora e outras estruturas com backtest", "Ferramenta operada por você — não recomenda ativo"],
+       [("asset-1.webp", "Carteira de ações", "carteira teórica com empresas e tickers fictícios"),
+        ("asset-2.webp", "Ações", "lista com variações e leitura estatística dos sinais"),
+        ("asset-3.webp", "Opções", "cadeia teórica (Black-Scholes) com gregas"),
+        ("asset-4.webp", "Operações estruturadas", "cenário previsto e opções candidatas"),
+        ("asset-5.webp", "Backtesting", "curva de patrimônio da estrutura contra buy & hold")])}
   </div>
 </section>
 
@@ -906,10 +945,10 @@ AREA_CLIENTE = f"""
 <section class="band">
   <div class="container">
     <div class="grid g2" style="background:transparent;border:0;gap:18px">
-      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-fiscal"><p class="eyebrow eyebrow--mute">Fiscal e Tributária</p><img src="/assets/demo/tela-fiscal.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
-      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-gestao"><p class="eyebrow eyebrow--mute">Gestão Financeira</p><img src="/assets/demo/tela-gestao.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
-      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-alpha"><p class="eyebrow eyebrow--mute">Alpha Invest AI</p><img src="/assets/demo/tela-alpha.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
-      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-asset"><p class="eyebrow eyebrow--mute">Asset Intelligence AI</p><img src="/assets/demo/tela-asset.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
+      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-fiscal"><p class="eyebrow eyebrow--mute">Fiscal e Tributária</p><img src="/assets/demo/fiscal-1.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
+      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-gestao"><p class="eyebrow eyebrow--mute">Gestão Financeira</p><img src="/assets/demo/gestao-1.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
+      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-alpha"><p class="eyebrow eyebrow--mute">Alpha Invest AI</p><img src="/assets/demo/alpha-1.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
+      <a class="card card--pad" href="https://dkdtecnologia.com/portais/#tela-asset"><p class="eyebrow eyebrow--mute">Asset Intelligence AI</p><img src="/assets/demo/asset-1.webp" width="1440" height="900" alt="" style="width:100%;height:auto;border-radius:8px"></a>
     </div>
     <p class="tiny" style="margin-top:14px">Precisa de outro acesso ou de renovar o prazo? Escreva para <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
   </div>

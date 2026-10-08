@@ -305,12 +305,19 @@ code{font-family:var(--font-mono);font-size:.86em;background:var(--surface-2);bo
 .tela .tela-img figcaption{margin-top:8px;color:var(--txt-3)}
 .mod.tela .tela-txt{padding:4px 26px 24px}
 .tela .tela-txt .chip{margin-top:22px}
+.tela-mins{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}
+.tela-min{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:4px;cursor:pointer;color:var(--txt-3);font:600 10.5px/1.25 var(--font-body);text-align:left}
+.tela-min img{display:block;width:100%;height:auto;border-radius:5px;margin-bottom:4px;opacity:.75}
+.tela-min:hover img,.tela-min.on img{opacity:1}
+.tela-min.on{border-color:var(--mod-c,var(--accent));color:var(--txt)}
+@media (max-width:620px){.tela-mins{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:900px){.mod.tela{grid-template-columns:minmax(0,1fr)}.mod.tela .tela-img{padding:18px 18px 0}}
 .mod .go{color:var(--mod-c,var(--accent));font-family:var(--font-display);font-weight:600;font-size:.94rem;text-decoration:none}
 .mod--gestao{--mod-c:var(--m-gestao)}
 .mod--alpha{--mod-c:var(--m-alpha)}
 .mod--asset{--mod-c:var(--m-asset)}
 .mod--fiscal{--mod-c:var(--m-fiscal)}
+.mod--integrado{--mod-c:var(--dkd)}
 .mod--gestao:hover,.mod--alpha:hover,.mod--asset:hover,.mod--fiscal:hover{border-color:var(--mod-c)}
 
 .chip{
